@@ -1,0 +1,21 @@
+---
+output: 
+ md_document:
+   variant: markdown_github
+---
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
+
+# Appendix {-}
+
+## Appendix A {-}
+
+Some appendix information here
+
+## Appendix B {-}
+
