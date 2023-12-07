@@ -1,0 +1,34 @@
+---
+title: "Bond Yields"
+documentclass: elsarticle
+Thesis_FP: no
+output:
+  pdf_document:
+    keep_tex: yes
+    template: Tex/TexDefault.txt
+    fig_width: null
+    fig_height: 3.5
+  html_document:
+    df_print: paged
+Author1: Ronan Morris
+Ref1: Stellenbosch University
+Email1: 22876634
+BottomRFooter: \footnotesize Page \thepage
+addtoprule: yes
+addfootrule: yes
+margin: 2.3
+bottom: 2
+top: 2.5
+HardSet_layout: yes
+linenumbers: no
+bibliography: Tex/ref.bib
+csl: "Tex/harvard-stellenbosch-university.csl"
+RemovePreprintSubmittedTo: yes
+toc: no
+numbersections: yes
+fontsize: 11pt
+linestretch: 1.2
+link-citations: yes
+AddTitle: yes
+---
+
