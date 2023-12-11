@@ -39,7 +39,9 @@ Global_2yr <- readRDS("data/BondYields_2Y.rds") %>%
  
      mutate(Name = gsub("_2yr", "", Name)) %>% 
     
-     filter(date <= "2022-03-31") # last available date in SA_2Yr
+     filter(date >= "2010-01-01" & date <= "2022-03-31") 
+
+# last available date in SA_2Yr
 
   # 10 year Global bonds.
 
@@ -49,25 +51,117 @@ Global_10yr <- readRDS("data/BondYields_10Y.rds") %>%
     
     filter(Name %in% Global_2yr$Name) %>% # Same bonds only
     
-    filter(date <= "2022-03-31")
+    filter(date >= "2010-01-01" & date <= "2022-03-31")
 
   # 2 year South African (SA) bonds. 
 
 SA_2yr <- readRDS("data/BondYields_2Y_SA.rds") %>% 
     
-    filter(date >= first(Global_10yr$date))
+    mutate(Name = gsub("_2Yr", "", Name)) %>%
+    
+    filter(date >= "2010-01-01" & date <= "2022-03-31")
 
   # 10 Year SA bonds.
 
 SA_10yr <- readRDS("data/BondYields_10Y_SA.rds") %>% 
     
-    filter(date >= first(Global_10yr$date) & date <= "2022-03-31") 
+    mutate(Name = gsub("_10Yr", "", Name)) %>% 
+    
+    filter(date >= "2010-01-01" & date <= "2022-03-31") 
 
 ```
 
 The data sets all now start at the same date, and the global sets include the same bonds. At this point it is clear that we have COVID-19 Data. Perhaps we can do a sort of crisis bond yield analysis? 
 
 ```{r}
+
+# Isolating BRCIS countries: 
+
+BRICS <- c(
+    
+    "Brazil", 
+          
+    "CHINA", 
+          
+    "India", 
+           
+    "Russia"
+    
+    )
+
+# Developed Countries: 
+
+Dev_Count <- c(
+    
+    "Canada",
+    
+    "France",
+    
+    "Germany",
+    
+    "Japan",
+    
+    "Korea",
+    
+    "NZ",
+    
+    "Singapore",
+    
+    "UK",
+    
+    "US"
+    
+    )
+    
+```
+
+```{r}
+
+Yield_Plotter <- function(Data, Vec, y, title){
+    
+    
+ Data %>% 
+    
+    filter(Name %in% {{Vec}}) %>% 
+    
+    select(Name, date, {{y}}) %>% 
+    
+    group_by(Name) %>% 
+    
+    ggplot(aes(x = date, y = {{y}}, color = Name)) +
+    
+    geom_line(linewidth = 0.8, 
+              alpha = 1) + 
+        
+    xlab("") + ylab("") +
+
+        labs(title = title) +
+        
+    scale_color_brewer(palette = "Set1") + # my favorite 
+        
+    theme_light() + 
+        
+        theme(legend.position = "bottom", 
+              legend.title = element_blank())
+    
+}
+
+###
+
+Yield_Plotter(Data = Global_2yr,
+              Vec = Dev_Count, 
+              y = BondYield_2,
+              "Developed Countries")
+
+Yield_Plotter(Data = Global_2yr,
+              Vec = BRICS, 
+              y = BondYield_2,
+              "B.R.I.C.S")
+
+Yield_Plotter(Data = SA_2yr,
+              Vec = "ZA", 
+              y = BondYield_2,
+              "South Africa")
 
 ```
 
