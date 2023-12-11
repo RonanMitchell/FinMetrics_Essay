@@ -32,3 +32,65 @@ link-citations: yes
 AddTitle: yes
 ---
 
+```{r include=FALSE, warning=FALSE}
+
+rm(list = ls())
+
+gc()
+
+###
+
+library(tidyverse)
+
+```
+
+# Required Packages:
+
+* tidyverse
+
+# Loading and Editing Data sets
+
+```{r}
+
+  # 2 year Global Bonds.
+
+Global_2yr <- readRDS("data/BondYields_2Y.rds") %>%
+ 
+     mutate(Name = gsub("_2yr", "", Name)) %>% 
+    
+     filter(date <= "2022-03-31") # last available date in SA_2Yr
+
+  # 10 year Global bonds.
+
+Global_10yr <- readRDS("data/BondYields_10Y.rds") %>% 
+    
+    mutate(Name = gsub("_10Yr", "", Name)) %>% 
+    
+    filter(Name %in% Global_2yr$Name) %>% # Same bonds only
+    
+    filter(date <= "2022-03-31")
+
+  # 2 year South African (SA) bonds. 
+
+SA_2yr <- readRDS("data/BondYields_2Y_SA.rds") %>% 
+    
+    filter(date >= first(Global_10yr$date))
+
+  # 10 Year SA bonds.
+
+SA_10yr <- readRDS("data/BondYields_10Y_SA.rds") %>% 
+    
+    filter(date >= first(Global_10yr$date) & date <= "2022-03-31")
+
+# the data sets all now start at the same date, and the global sets include the same bonds. 
+
+# At this point it is clear that we have COVID-19 Data. Perhaps we can do a sort of crisis bond yield analysis? 
+
+```
+
+```{r}
+
+
+
+```
+

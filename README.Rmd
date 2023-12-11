@@ -3,21 +3,71 @@ output:
  md_document:
    variant: markdown_github
 ---
+The purpose of this README is to guide the reader through the decisions I made when writing my final Financial Econometrics research assignment (Masters in Economics). I selected the following question:
 
+* "Study bond yield spreads - you have 10yr and 2yr bond yields. Calculate the spread and see if you can find any interesting patterns comparing yield spreads through time, linking it to VIX / currency volatility - and perhaps looking at other macro factors too."
 
+This README will guide the reader through any code, functions, and output that was constructed for this assignment. 
 
-\newpage
+# Interpretation of the Question
 
-# References {-}
+```{r include=FALSE, warning=FALSE}
 
-<div id="refs"></div>
+rm(list = ls())
 
+gc()
 
-# Appendix {-}
+###
 
-## Appendix A {-}
+library(tidyverse)
+library(ggplot2)
 
-Some appendix information here
+```
 
-## Appendix B {-}
+# Required Packages:
+
+* tidyverse
+* ggplot2
+
+# Loading and Editing Data sets
+
+```{r}
+
+  # 2 year Global Bonds.
+
+Global_2yr <- readRDS("data/BondYields_2Y.rds") %>%
+ 
+     mutate(Name = gsub("_2yr", "", Name)) %>% 
+    
+     filter(date <= "2022-03-31") # last available date in SA_2Yr
+
+  # 10 year Global bonds.
+
+Global_10yr <- readRDS("data/BondYields_10Y.rds") %>% 
+    
+    mutate(Name = gsub("_10Yr", "", Name)) %>% 
+    
+    filter(Name %in% Global_2yr$Name) %>% # Same bonds only
+    
+    filter(date <= "2022-03-31")
+
+  # 2 year South African (SA) bonds. 
+
+SA_2yr <- readRDS("data/BondYields_2Y_SA.rds") %>% 
+    
+    filter(date >= first(Global_10yr$date))
+
+  # 10 Year SA bonds.
+
+SA_10yr <- readRDS("data/BondYields_10Y_SA.rds") %>% 
+    
+    filter(date >= first(Global_10yr$date) & date <= "2022-03-31") 
+
+```
+
+The data sets all now start at the same date, and the global sets include the same bonds. At this point it is clear that we have COVID-19 Data. Perhaps we can do a sort of crisis bond yield analysis? 
+
+```{r}
+
+```
 
