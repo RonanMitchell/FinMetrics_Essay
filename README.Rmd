@@ -36,44 +36,112 @@ library(ggplot2)
   # 2 year Global Bonds.
 
 Global_2yr <- readRDS("data/BondYields_2Y.rds") %>%
- 
-     mutate(Name = gsub("_2yr", "", Name)) %>% 
     
-     filter(date >= "2010-01-01" & date <= "2022-03-31") 
-
-# last available date in SA_2Yr
+   mutate(Name = gsub("_2yr", "", Name)) %>%
+    
+   mutate(Ticker = gsub("2Y", "", Ticker)) %>%
+    
+   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
+    
+   group_by(YearMonth = format(date, "%Y-%m")) %>%
+    
+   filter(date == max(date)) %>% 
+    
+   ungroup()
 
   # 10 year Global bonds.
 
 Global_10yr <- readRDS("data/BondYields_10Y.rds") %>% 
     
-    mutate(Name = gsub("_10Yr", "", Name)) %>% 
+   mutate(Name = gsub("_10Yr", "", Name)) %>% 
     
-    filter(Name %in% Global_2yr$Name) %>% # Same bonds only
+   mutate(Ticker = gsub("10Y", "", Ticker)) %>%
+   
+   filter(Name %in% Global_2yr$Name) %>% # Same bonds only
     
-    filter(date >= "2010-01-01" & date <= "2022-03-31")
+   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
+    
+   group_by(YearMonth = format(date, "%Y-%m")) %>%
+    
+   filter(date == max(date)) %>% 
+    
+   ungroup()
 
   # 2 year South African (SA) bonds. 
 
 SA_2yr <- readRDS("data/BondYields_2Y_SA.rds") %>% 
     
-    mutate(Name = gsub("_2Yr", "", Name)) %>%
+   mutate(Name = gsub("_2Yr", "", Name)) %>%
     
-    filter(date >= "2010-01-01" & date <= "2022-03-31")
+   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
+    
+   group_by(YearMonth = format(date, "%Y-%m")) %>%
+    
+   filter(date == max(date)) %>% 
+    
+   ungroup()
 
   # 10 Year SA bonds.
 
 SA_10yr <- readRDS("data/BondYields_10Y_SA.rds") %>% 
     
-    mutate(Name = gsub("_10Yr", "", Name)) %>% 
+   mutate(Name = gsub("_10Yr", "", Name)) %>% 
     
-    filter(date >= "2010-01-01" & date <= "2022-03-31") 
+   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
+    
+   group_by(YearMonth = format(date, "%Y-%m")) %>%
+    
+   filter(date == max(date)) %>% 
+    
+   ungroup()
 
 ```
 
 The data sets all now start at the same date, and the global sets include the same bonds. At this point it is clear that we have COVID-19 Data. Perhaps we can do a sort of crisis bond yield analysis? 
 
-```{r}
+```{r }
+
+# Why are the data sets different lengths? 
+
+source("code/Similarity_Checker_foo.R")
+
+SimilarityChecker_foo(Global_10yr, Global_2yr, "date") # same dates 
+SimilarityChecker_foo(Global_10yr, Global_2yr, "Name") # same countries 
+
+SimilarityChecker_foo(
+    
+    Global_10yr, Global_2yr, "Ticker"
+    
+    ) # different bonds but same countries? 
+
+###
+
+Global_2yr <- 
+    
+    Global_2yr %>% 
+    
+    filter(
+        
+        Ticker %in% Global_10yr$Ticker) %>% 
+
+# Removed some but still different number of observations. 
+    
+    #Duplicate dates? 
+
+ distinct(Ticker, date, .keep_all = TRUE) # no duplicate dates 
+
+# The culprit is, it turns out: 
+
+print(table(Global_10yr$Name))
+
+print(table(Global_2yr$Name))
+
+# Different countries have different starting points in terms of dates, different numbers of observations each, between the two data sets. 
+
+```
+
+
+```{r }
 
 # Isolating BRCIS countries: 
 
@@ -85,7 +153,9 @@ BRICS <- c(
           
     "India", 
            
-    "Russia"
+    "Russia",
+    
+    "ZA"
     
     )
 
@@ -112,56 +182,44 @@ Dev_Count <- c(
     "US"
     
     )
+
+# Developing Countries: 
+
+Developing_vec <- unique(
     
+    Global_2yr$Name[!Global_2yr$Name %in% Dev_Count])
+
 ```
 
-```{r}
+```{r warning=FALSE}
 
-Yield_Plotter <- function(Data, Vec, y, title){
-    
-    
- Data %>% 
-    
-    filter(Name %in% {{Vec}}) %>% 
-    
-    select(Name, date, {{y}}) %>% 
-    
-    group_by(Name) %>% 
-    
-    ggplot(aes(x = date, y = {{y}}, color = Name)) +
-    
-    geom_line(linewidth = 0.8, 
-              alpha = 1) + 
-        
-    xlab("") + ylab("") +
-
-        labs(title = title) +
-        
-    scale_color_brewer(palette = "Set1") + # my favorite 
-        
-    theme_light() + 
-        
-        theme(legend.position = "bottom", 
-              legend.title = element_blank())
-    
-}
+source("code/Yield_Plotter_foo.R")
 
 ###
+
+Yield_Plotter(Data = Global_10yr,
+              Vec = Dev_Count, 
+              y = BondYield_10,
+              "Developed Countries (10-Year)")
 
 Yield_Plotter(Data = Global_2yr,
               Vec = Dev_Count, 
               y = BondYield_2,
-              "Developed Countries")
+              "Developed Countries (2-Year)")
+
+###
+
+Yield_Plotter(Data = Global_10yr,
+              Vec = Developing_vec, 
+              y = BondYield_10,
+              "Developing Countries (10-Year)")
 
 Yield_Plotter(Data = Global_2yr,
-              Vec = BRICS, 
+              Vec = Developing_vec, 
               y = BondYield_2,
-              "B.R.I.C.S")
+              "Developing Countries (2-Year)")
 
-Yield_Plotter(Data = SA_2yr,
-              Vec = "ZA", 
-              y = BondYield_2,
-              "South Africa")
+###
 
 ```
 
