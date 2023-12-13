@@ -21,6 +21,7 @@ gc()
 
 library(tidyverse)
 library(ggplot2)
+library(gridExtra)
 
 ```
 
@@ -140,7 +141,7 @@ print(table(Global_2yr$Name))
 
 ```
 
-```{r}
+```{r }
 
 source("code/Data_Merger_foo.R")
 
@@ -257,6 +258,8 @@ Yield_Plotter(Data = Bonds10yr,
               Vec = BRICS, 
               y = BondYield_10,
               "BRICS (10-Year)")
+
+###
 
 ```
 
