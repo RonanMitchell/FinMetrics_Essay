@@ -140,6 +140,27 @@ print(table(Global_2yr$Name))
 
 ```
 
+```{r}
+
+source("code/Data_Merger_foo.R")
+
+###
+
+Bonds2yr <- 
+
+Data_Merger_foo(Global_2yr, SA_2yr, BondYield_2, "BondYield_2")
+
+###
+
+Bonds10yr <- 
+
+Data_Merger_foo(Global_10yr, SA_10yr, BondYield_10, "BondYield_10")
+
+###
+
+rm(list = c("Global_10yr", "Global_2yr", "SA_10yr", "SA_2yr"))
+
+```
 
 ```{r }
 
@@ -185,9 +206,15 @@ Dev_Count <- c(
 
 # Developing Countries: 
 
-Developing_vec <- unique(
+Developing_vec <- 
     
-    Global_2yr$Name[!Global_2yr$Name %in% Dev_Count])
+    unique(
+  
+        Bonds2yr$Name[!grepl("EURO", Bonds2yr$Name) & 
+                          
+                          !Bonds2yr$Name %in% Dev_Count]
+        
+)
 
 ```
 
@@ -197,29 +224,39 @@ source("code/Yield_Plotter_foo.R")
 
 ###
 
-Yield_Plotter(Data = Global_10yr,
+Yield_Plotter(Data = Bonds10yr,
               Vec = Dev_Count, 
               y = BondYield_10,
               "Developed Countries (10-Year)")
 
-Yield_Plotter(Data = Global_2yr,
+Yield_Plotter(Data = Bonds2yr,
               Vec = Dev_Count, 
               y = BondYield_2,
               "Developed Countries (2-Year)")
 
 ###
 
-Yield_Plotter(Data = Global_10yr,
+Yield_Plotter(Data = Bonds10yr,
               Vec = Developing_vec, 
               y = BondYield_10,
               "Developing Countries (10-Year)")
 
-Yield_Plotter(Data = Global_2yr,
+Yield_Plotter(Data = Bonds2yr,
               Vec = Developing_vec, 
               y = BondYield_2,
               "Developing Countries (2-Year)")
 
 ###
+
+Yield_Plotter(Data = Bonds2yr,
+              Vec = BRICS, 
+              y = BondYield_2,
+              "BRICS (2-Year)")
+
+Yield_Plotter(Data = Bonds10yr,
+              Vec = BRICS, 
+              y = BondYield_10,
+              "BRICS (10-Year)")
 
 ```
 
