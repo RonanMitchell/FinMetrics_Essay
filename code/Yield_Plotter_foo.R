@@ -12,7 +12,7 @@ Yield_Plotter <- function(Data, Vec, y, title){
         ggplot(aes(x = date, y = {{y}}, color = Name)) +
 
         geom_line(linewidth = 0.8,
-                  alpha = 1) +
+                  alpha = 0.8) +
 
         geom_hline(yintercept = 0) +
 

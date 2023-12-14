@@ -17,11 +17,24 @@ rm(list = ls())
 
 gc()
 
-###
+# General:
 
 library(tidyverse)
 library(ggplot2)
 library(gridExtra)
+
+# Ridge Plots:
+
+library(ggridges)
+library(viridis)
+library(hrbrthemes)
+
+# Geo-spatial data:
+
+library(lwgeom)
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
 
 ```
 
@@ -219,7 +232,11 @@ Developing_vec <-
 
 ```
 
-```{r warning=FALSE}
+# Descriptive Statistics 
+
+## Yields 
+
+```{r warning = FALSE}
 
 source("code/Yield_Plotter_foo.R")
 
@@ -259,7 +276,48 @@ Yield_Plotter(Data = Bonds10yr,
               y = BondYield_10,
               "BRICS (10-Year)")
 
+```
+
+## Ridge Plots 
+
+```{r warning = FALSE}
+
+source("code/Ridge_Plotter_foo.R")
+
 ###
+
+Ridge_Plotter(Bonds10yr, 
+              "US", 
+              BondYield_10,
+              BRICS,
+              "Distribution of BRICS Yields")
+
+Ridge_Plotter(Bonds10yr,
+              "US",
+              BondYield_10, 
+              Dev_Count,
+              "Distribution of Developed Countries' Yields")
+
+```
+
+## Geospatial Plotting 
+
+```{r warning = FALSE}
+
+source("code/Map_Data_foo.R")
+
+M1 <- Map_Data_foo(Bonds10yr, BondYield_10)
+M2 <- Map_Data_foo(Bonds2yr, BondYield_2)
+
+```
+
+```{r warning = FALSE}
+
+source("code/Create_Map_foo.R")
+
+###
+
+create_map(M1, "Average Bond Yield (10-Year)")
 
 ```
 
