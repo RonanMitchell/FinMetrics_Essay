@@ -9,7 +9,7 @@ Yield_Plotter <- function(Data, Vec, y, title){
 
         group_by(Name) %>%
 
-        ggplot(aes(x = date, y = {{y}}, color = Name)) +
+        ggplot(aes(x = as.Date(date), y = {{y}}, color = Name)) +
 
         geom_line(linewidth = 0.8,
                   alpha = 0.8) +
@@ -25,7 +25,8 @@ Yield_Plotter <- function(Data, Vec, y, title){
         theme_light() +
 
         theme(legend.position = "bottom",
-              legend.title = element_blank())
+              legend.title = element_blank(),
+              plot.title = element_text(size = rel(0.9)))
 
 
 }

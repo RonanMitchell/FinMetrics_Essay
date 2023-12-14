@@ -226,9 +226,51 @@ Developing_vec <-
   
         Bonds2yr$Name[!grepl("EURO", Bonds2yr$Name) & 
                           
+                        !grepl("Venezuela", Bonds2yr$Name) &
+                          
                           !Bonds2yr$Name %in% Dev_Count]
         
 )
+
+```
+
+```{r}
+
+# world bank CPI measure, I have only downloaded since 2010. 
+
+CPI <- read.csv("data/Inflation Data.csv") %>%
+    
+  `colnames<-`(sub("^X", "", colnames(.))) %>% # Excel problem
+    
+  mutate(Name = ifelse(Name == "China", "CHINA",
+                       
+                ifelse(Name == "New Zealand", "NZ",
+                              
+                ifelse(Name == "United Kingdom", "UK", 
+                                     
+                ifelse(Name == "United States", "US",
+                       
+                ifelse(Name == "Russian Federation", "Russia",
+                                            
+                ifelse(Name == "South Africa", "ZA", Name))))))) %>%
+    
+  filter(Name %in% Bonds2yr$Name) %>% # select same countries
+    
+  gather(date, CPI, -Name) %>%
+    
+  mutate(date = as.Date(paste0(date, "-01-01"))) %>% 
+    
+  arrange(Name, date) %>%
+    
+  group_by(Name) %>%
+    
+  mutate(Inflation = (CPI - lag(CPI)) / lag(CPI) * 100) %>% # inflation
+    
+  replace_na(list(Inflation = 0)) %>% # first date is zero inflation 
+    
+  mutate(CPI = (CPI - 100)) %>% 
+    
+  ungroup()
 
 ```
 
@@ -277,6 +319,45 @@ Yield_Plotter(Data = Bonds10yr,
               "BRICS (10-Year)")
 
 ```
+
+```{r}
+
+# Inflation 
+
+Yield_Plotter(Data = CPI,
+              Vec = Dev_Count, 
+              y = Inflation,
+              "Developed Nations Inflation")
+
+Yield_Plotter(Data = CPI,
+              Vec = Developing_vec, 
+              y = Inflation,
+              "Developing Nations Inflation")
+
+Yield_Plotter(Data = CPI,
+              Vec = BRICS, 
+              y = Inflation,
+              "BRICS Inflation")
+
+# CPI 
+
+Yield_Plotter(Data = CPI,
+              Vec = Dev_Count, 
+              y = CPI,
+              "Developed Nations CPI")
+
+Yield_Plotter(Data = CPI,
+              Vec = Dev_Count, 
+              y = CPI,
+              "Developed Nations CPI")
+
+Yield_Plotter(Data = CPI,
+              Vec = BRICS, 
+              y = CPI,
+              "BRICS CPI")
+
+```
+
 
 ## Ridge Plots 
 
