@@ -11,6 +11,8 @@ This README will guide the reader through any code, functions, and output that w
 
 # Interpretation of the Question
 
+I have decided to focus on a comparison between South African bond yields and those of the rest of the world. I begin with descriptive data analysis, such as simply plotting the various yields - except I contextualize these yields by indicating high volatility times for the US, or EU. I also compare the distribution of yields for each country through the use of ridge lines. Finally, a visually intuitive tool - geospatial analysis - is used to convey they risk level of different countries. Once the descriptive analysis is done, I build a GARCH model. 
+
 ```{r include=FALSE, warning=FALSE}
 
 rm(list = ls())
@@ -40,78 +42,85 @@ library(rnaturalearthdata)
 
 # Required Packages:
 
+## General
+
 * tidyverse
+
+## Plotting 
+
 * ggplot2
+* gridExtra
+
+* ggridges 
+* viridis 
+* hrbrthemes 
+
+* lwgeom 
+* sf
+* rnaturalearth 
+* rnaturalearthdata
+
 
 # Loading and Editing Data sets
 
+## Importing Perscribed Data
+
+The data sets all required similar wrangling, so I wrote a function to sort of get each data set into similar shape (Data_Creator_foo). The function essentially removes unnecessary tags from country names or bond tickers (so that I can more easily merge all sets later on), and converts to monthly yields. The reason for this is that I could only get monthly inflation from the World Bank and if I want to do some yield adjustments later on, this change might be useful. Finally, the function filters only by dates post-2010, because the SA data sets were limited to this. 
+
 ```{r}
 
-  # 2 year Global Bonds.
 
-Global_2yr <- readRDS("data/BondYields_2Y.rds") %>%
-    
-   mutate(Name = gsub("_2yr", "", Name)) %>%
-    
-   mutate(Ticker = gsub("2Y", "", Ticker)) %>%
-    
-   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
-    
-   group_by(YearMonth = format(date, "%Y-%m")) %>%
-    
-   filter(date == max(date)) %>% 
-    
-   ungroup()
+source("code/Data_Creator_foo.R")
+
+# 2 year Global Bonds.
+
+Global_2yr <- 
+
+    Data_Creator_foo(readRDS("data/BondYields_2Y.rds"),
+                 
+                     "_2yr",
+                 
+                     "2Y")
 
   # 10 year Global bonds.
 
-Global_10yr <- readRDS("data/BondYields_10Y.rds") %>% 
+Global_10yr <- 
     
-   mutate(Name = gsub("_10Yr", "", Name)) %>% 
-    
-   mutate(Ticker = gsub("10Y", "", Ticker)) %>%
+    Data_Creator_foo(readRDS("data/BondYields_10Y.rds"),
+                     
+                     "_10Yr",
+                     
+                     "10Y")  %>%
    
-   filter(Name %in% Global_2yr$Name) %>% # Same bonds only
-    
-   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
-    
-   group_by(YearMonth = format(date, "%Y-%m")) %>%
-    
-   filter(date == max(date)) %>% 
-    
-   ungroup()
+   filter(Name %in% Global_2yr$Name)
+
+
 
   # 2 year South African (SA) bonds. 
 
-SA_2yr <- readRDS("data/BondYields_2Y_SA.rds") %>% 
+SA_2yr <- 
     
-   mutate(Name = gsub("_2Yr", "", Name)) %>%
-    
-   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
-    
-   group_by(YearMonth = format(date, "%Y-%m")) %>%
-    
-   filter(date == max(date)) %>% 
-    
-   ungroup()
+    Data_Creator_foo(readRDS("data/BondYields_2Y_SA.rds"),
+                     
+                     "_2Yr", 
+                     
+                     "")
 
   # 10 Year SA bonds.
 
-SA_10yr <- readRDS("data/BondYields_10Y_SA.rds") %>% 
+SA_10yr <- 
     
-   mutate(Name = gsub("_10Yr", "", Name)) %>% 
-    
-   filter(date >= "2010-01-01" & date <= "2022-03-31") %>%
-    
-   group_by(YearMonth = format(date, "%Y-%m")) %>%
-    
-   filter(date == max(date)) %>% 
-    
-   ungroup()
+    Data_Creator_foo(readRDS("data/BondYields_10Y_SA.rds"),
+                     
+                     "_10Yr",
+                     
+                     "") 
 
 ```
 
 The data sets all now start at the same date, and the global sets include the same bonds. At this point it is clear that we have COVID-19 Data. Perhaps we can do a sort of crisis bond yield analysis? 
+
+The code chunk below simply demonstrates my investigation into why the data sets might include the same names and bonds now, but do not have the same dimensions. This need not usually be a huge concern, because plotting will work regardless, but I just wanted to check whether there is cause for concern. In the end, it was fine and nothing much really needed changing. In order to check the similarity of different columns in each data set, I wrote a comparison function named Similarity_Checker_foo.R. 
 
 ```{r }
 
@@ -154,6 +163,10 @@ print(table(Global_2yr$Name))
 
 ```
 
+## Merging Perscribed Data 
+
+Because the data came in pseudo-long format, I had to write a function to easily merge future data sets, as, from my point of view, merging these data sets required some substantial but repeatable coding, wrangling and thinking. So the function now does all of this for me - Data_Merger_foo.R. 
+
 ```{r }
 
 source("code/Data_Merger_foo.R")
@@ -175,6 +188,10 @@ Data_Merger_foo(Global_10yr, SA_10yr, BondYield_10, "BondYield_10")
 rm(list = c("Global_10yr", "Global_2yr", "SA_10yr", "SA_2yr"))
 
 ```
+
+## Search Vectors 
+
+Below, I simply create some search/character vectors that will easily allow me to filter through the data and only plot specific regions later on. This will help for the ridge line plots, and the bond yield plots - even the inflation plots to come. Region specific analysis makes more sense to me because one can otherwise get lost in a mess of lines or distributions that exhibit less than usual (visual) co-movement, and it can be difficult to see exactly what is going on. 
 
 ```{r }
 
@@ -232,9 +249,15 @@ Developing_vec <-
         
 )
 
+# Venezuela destroyed the aesthetics of all my graphs because their yield, inflation and distribution is insane. It was visually easier to cope if they are not in the ridge or line plots. 
+
 ```
 
-```{r}
+## Non-perscribed Data 
+
+Below I download CPI data from the World Bank. This is so that I am able to either use CPI or inflation measures from a reputable source to contextualized bond yields. Inflation is one of the only true economic risks that can face a bond - in normal times - and as such I think it is worth including in the analysis. 
+
+```{r }
 
 # world bank CPI measure, I have only downloaded since 2010. 
 
@@ -251,8 +274,12 @@ CPI <- read.csv("data/Inflation Data.csv") %>%
                 ifelse(Name == "United States", "US",
                        
                 ifelse(Name == "Russian Federation", "Russia",
+                       
+                ifelse(Name == "Venezuela, RB", "Venezuela",
                                             
-                ifelse(Name == "South Africa", "ZA", Name))))))) %>%
+                ifelse(Name == "South Africa", "ZA", Name)
+                
+                ))))))) %>%
     
   filter(Name %in% Bonds2yr$Name) %>% # select same countries
     
@@ -274,9 +301,18 @@ CPI <- read.csv("data/Inflation Data.csv") %>%
 
 ```
 
+```{r}
+
+VIX_Data <- read.csv("data/VIX Data.csv") %>%
+  
+    mutate(date = as.Date(date, format = "%d/%m/%Y")) 
+
+```
+
+
 # Descriptive Statistics 
 
-## Yields 
+## Developed Nations Bond Yields & Inflation 
 
 ```{r warning = FALSE}
 
@@ -284,80 +320,73 @@ source("code/Yield_Plotter_foo.R")
 
 ###
 
+grid.arrange(
+
 Yield_Plotter(Data = Bonds10yr,
               Vec = Dev_Count, 
               y = BondYield_10,
-              "Developed Countries (10-Year)")
+              "Developed Nations",
+              "Bond Yield (10-Year)",
+              "none"),
 
-Yield_Plotter(Data = Bonds2yr,
+Yield_Plotter(Data = CPI,
               Vec = Dev_Count, 
-              y = BondYield_2,
-              "Developed Countries (2-Year)")
+              y = Inflation,
+              "",
+              "Inflation",
+              "bottom"),
 
-###
-
-Yield_Plotter(Data = Bonds10yr,
-              Vec = Developing_vec, 
-              y = BondYield_10,
-              "Developing Countries (10-Year)")
-
-Yield_Plotter(Data = Bonds2yr,
-              Vec = Developing_vec, 
-              y = BondYield_2,
-              "Developing Countries (2-Year)")
-
-###
-
-Yield_Plotter(Data = Bonds2yr,
-              Vec = BRICS, 
-              y = BondYield_2,
-              "BRICS (2-Year)")
-
-Yield_Plotter(Data = Bonds10yr,
-              Vec = BRICS, 
-              y = BondYield_10,
-              "BRICS (10-Year)")
+ncol = 1)
 
 ```
+
+## Developing Nations Bond Yields & Inflation 
 
 ```{r}
 
-# Inflation 
+grid.arrange(
 
-Yield_Plotter(Data = CPI,
-              Vec = Dev_Count, 
-              y = Inflation,
-              "Developed Nations Inflation")
+Yield_Plotter(Data = Bonds10yr,
+              Vec = Developing_vec, 
+              y = BondYield_10,
+              "Developing Nations",
+              "Bond Yield (10-Year)",
+              "none"),
 
 Yield_Plotter(Data = CPI,
               Vec = Developing_vec, 
               y = Inflation,
-              "Developing Nations Inflation")
+              "",
+              "Inflation",
+              "bottom"),
+
+ncol = 1)
+
+```
+
+## BRICS Bond Yields & Inflation 
+
+```{r}
+
+grid.arrange(
+
+Yield_Plotter(Data = Bonds10yr,
+              Vec = BRICS, 
+              y = BondYield_10,
+              "BRICS",
+              "Bond Yield (10-Year)",
+              "none"),
 
 Yield_Plotter(Data = CPI,
               Vec = BRICS, 
               y = Inflation,
-              "BRICS Inflation")
+              "",
+              "Inflation",
+              "bottom"),
 
-# CPI 
-
-Yield_Plotter(Data = CPI,
-              Vec = Dev_Count, 
-              y = CPI,
-              "Developed Nations CPI")
-
-Yield_Plotter(Data = CPI,
-              Vec = Dev_Count, 
-              y = CPI,
-              "Developed Nations CPI")
-
-Yield_Plotter(Data = CPI,
-              Vec = BRICS, 
-              y = CPI,
-              "BRICS CPI")
+ncol = 1)
 
 ```
-
 
 ## Ridge Plots 
 
@@ -368,10 +397,14 @@ source("code/Ridge_Plotter_foo.R")
 ###
 
 Ridge_Plotter(Bonds10yr, 
-              "US", 
+              "ZA", 
               BondYield_10,
               BRICS,
               "Distribution of BRICS Yields")
+
+```
+
+```{r}
 
 Ridge_Plotter(Bonds10yr,
               "US",
@@ -387,8 +420,8 @@ Ridge_Plotter(Bonds10yr,
 
 source("code/Map_Data_foo.R")
 
-M1 <- Map_Data_foo(Bonds10yr, BondYield_10)
-M2 <- Map_Data_foo(Bonds2yr, BondYield_2)
+M1 <- Map_Data_foo(Bonds2yr, BondYield_2)
+M2 <- Map_Data_foo(CPI, Inflation)
 
 ```
 
@@ -398,7 +431,13 @@ source("code/Create_Map_foo.R")
 
 ###
 
-create_map(M1, "Average Bond Yield (10-Year)")
+grid.arrange(
+
+create_map(M1, "Average Bond Yield (2-Year)"),
+
+create_map(M2, "Average Inflation"),
+
+ncol = 1)
 
 ```
 

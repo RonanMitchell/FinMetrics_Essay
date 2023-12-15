@@ -36,6 +36,6 @@ Ridge_Plotter <- function(Data, name, var, countries, title){
 
         theme(legend.position = "none",
               axis.text.x = element_blank(),
-              plot.title = element_text(size = rel(0.9)))
+              plot.title = element_text(size = rel(0.8)))
 
 }

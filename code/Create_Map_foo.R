@@ -19,9 +19,9 @@ ggplot(data = df) +
 
     geom_sf(aes(fill = mean_yield)) +
 
-    scale_fill_gradientn(colors = c("blue",
+    scale_fill_gradientn(colors = c("blue4",
                                         "red"),
-                         na.value = "lightslategrey",
+                         na.value = "grey80",
                          name = "",
                          limits = c(1, 25)) +
 

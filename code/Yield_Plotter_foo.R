@@ -1,4 +1,4 @@
-Yield_Plotter <- function(Data, Vec, y, title){
+Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
 
 
     Data %>%
@@ -18,15 +18,15 @@ Yield_Plotter <- function(Data, Vec, y, title){
 
         xlab("") + ylab("") +
 
-        labs(title = title) +
-
-        #scale_color_brewer(palette = "Set1") + # my favorite
+        labs(title = title,
+             subtitle = subtitle) +
 
         theme_light() +
 
-        theme(legend.position = "bottom",
+        theme(legend.position = {{legend}},
               legend.title = element_blank(),
-              plot.title = element_text(size = rel(0.9)))
+              plot.title = element_text(size = rel(0.8)),
+              plot.subtitle = element_text(size = rel(0.7)))
 
 
 }
