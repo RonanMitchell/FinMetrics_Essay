@@ -255,7 +255,7 @@ Developing_vec <-
 
 ## Non-perscribed Data 
 
-Below I download CPI data from the World Bank. This is so that I am able to either use CPI or inflation measures from a reputable source to contextualized bond yields. Inflation is one of the only true economic risks that can face a bond - in normal times - and as such I think it is worth including in the analysis. 
+Below I download CPI data from the World Bank. This is so that I am able to either use CPI or inflation measures from a reputable source to contextualized bond yields. Inflation is one of the only true economic risks that can face a bond - in normal times - and as such I think it is worth including in the analysis. I have also downloaded VIX and US-EU exchange rate data from FRED. 
 
 ```{r }
 
@@ -303,12 +303,25 @@ CPI <- read.csv("data/Inflation Data.csv") %>%
 
 ```{r}
 
+###
+
+# VIX monthly data from FRED:
+
 VIX_Data <- read.csv("data/VIX Data.csv") %>%
   
-    mutate(date = as.Date(date, format = "%d/%m/%Y")) 
+    mutate(date = as.Date(date, format = "%d/%m/%Y")) %>% 
+    
+        filter(date <= "2022-03-31")
+
+###
+
+US_Exchange <- read.csv("data/US to EU Exchange.csv") %>%
+  
+    mutate(date = as.Date(date, format = "%d/%m/%Y")) %>% 
+    
+        filter(date <= "2022-03-31")
 
 ```
-
 
 # Descriptive Statistics 
 
