@@ -552,3 +552,5 @@ Inflation_Map <- create_map(M2, "Average Inflation", "none")
 
 # I print both in a hidden chunk in order to maintain neatness. 
 ```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-16-1.png" width="100%" height="100%" /><img src="README_files/figure-markdown_github/unnamed-chunk-16-2.png" width="100%" height="100%" />
