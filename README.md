@@ -24,11 +24,11 @@ risk level of different countries.
 
 # Required Packages:
 
-\## General
+## General Packages
 
 -   tidyverse
 
-    ## Plotting
+## Plotting Packages
 
 -   ggplot2
 

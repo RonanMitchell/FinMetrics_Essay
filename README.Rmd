@@ -42,11 +42,11 @@ library(rnaturalearthdata)
 
 # Required Packages:
 
-  ## General
+## General Packages
 
 * tidyverse
 
-  ## Plotting 
+## Plotting Packages
 
 * ggplot2
 * gridExtra
