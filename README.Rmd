@@ -60,7 +60,6 @@ library(rnaturalearthdata)
 * rnaturalearth 
 * rnaturalearthdata
 
-
 # Loading and Editing Data sets
 
 ## Importing Perscribed Data
@@ -301,7 +300,7 @@ CPI <- read.csv("data/Inflation Data.csv") %>%
 
 ```
 
-```{r}
+```{r }
 
 ###
 
@@ -321,6 +320,24 @@ US_Exchange <- read.csv("data/US to EU Exchange.csv") %>%
     
         filter(date <= "2022-03-31")
 
+###
+
+source("code/High_Vol_foo.R")
+
+VIX_Vol <- High_Vol_foo(VIX_Data, VIX, 0.67, type = "")
+
+US_Vol <- High_Vol_foo(US_Exchange, Rate, 0.67, type = "sd")
+
+# These high volatility periods are used to construct the geom_rects to indicate them on the ggplot graphs.
+
+###
+
+# I tried for hours to think of a functional way to create these rectangles. i.e. I thought maybe a for loop of some kind, i.e. for date in VIX_Vol etc... but I found it incredibly difficult to add whatever result I came up with neatly to a ggplot as an object. There probably is a very easy way to do it but it stumped me for quite some time. 
+
+source("code/Rectangle_Creation_Script.R")
+
+alpha = 0.15
+
 ```
 
 # Descriptive Statistics 
@@ -328,6 +345,10 @@ US_Exchange <- read.csv("data/US to EU Exchange.csv") %>%
 ## Developed Nations Bond Yields & Inflation 
 
 ```{r warning = FALSE}
+
+# Blue bar means high US/EURO exchange rate volatility 
+# Red bar means high VIX level.
+# Purple means they overlap. 
 
 source("code/Yield_Plotter_foo.R")
 
@@ -355,7 +376,7 @@ ncol = 1)
 
 ## Developing Nations Bond Yields & Inflation 
 
-```{r}
+```{r warning = FALSE}
 
 grid.arrange(
 
@@ -379,7 +400,7 @@ ncol = 1)
 
 ## BRICS Bond Yields & Inflation 
 
-```{r}
+```{r warning = FALSE}
 
 grid.arrange(
 
@@ -401,6 +422,24 @@ ncol = 1)
 
 ```
 
+```{r}
+
+# Housekeeping 
+
+rm(
+    
+    list = c("HV1", "HV2", "HV3", "HV4", "HV5", "HV6", "HV7", "HV8")
+    
+    )
+
+rm(
+    
+    list = c("VIX_Data", "US_Exchange", "US_Vol", "VIX_Vol")
+    
+    )
+
+```
+
 ## Ridge Plots 
 
 ```{r warning = FALSE}
@@ -417,7 +456,7 @@ Ridge_Plotter(Bonds10yr,
 
 ```
 
-```{r}
+```{r warning = FALSE}
 
 Ridge_Plotter(Bonds10yr,
               "US",

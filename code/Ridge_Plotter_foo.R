@@ -24,11 +24,11 @@ Ridge_Plotter <- function(Data, name, var, countries, title){
 
         geom_density_ridges(scale = 2,
                             rel_min_height = 0.01,
-                            alpha = 0.6) +
+                            alpha = 0.5) +
 
         geom_vline(xintercept = mean_yield,
                    linetype = "dashed",
-                   color = "grey30") +
+                   color = "grey20") +
 
         labs(title = title) +
         xlab("") +
