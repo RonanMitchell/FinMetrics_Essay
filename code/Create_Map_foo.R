@@ -2,7 +2,7 @@
 
 # Define a function to create a choropleth map
 
-create_map <- function(df, title) {
+create_map <- function(df, title, legend) {
 
     # Compute the representative points for each country
 
@@ -19,8 +19,8 @@ ggplot(data = df) +
 
     geom_sf(aes(fill = mean_yield)) +
 
-    scale_fill_gradientn(colors = c("blue4",
-                                        "red"),
+    scale_fill_gradientn(colors = c("blue",
+                                        "deeppink"),
                          na.value = "grey80",
                          name = "",
                          limits = c(1, 25)) +
@@ -36,10 +36,12 @@ ggplot(data = df) +
           panel.border = element_blank(),
           axis.text.x = element_blank(),
           axis.text.y = element_blank(),
-          legend.position = "none",
+          legend.position = legend,
+          legend.background = element_rect(fill = "black"),
+          legend.text = element_text(color = "white"),
           plot.margin = margin(0, 0, 0, 0),
           plot.title = element_text(color = "white",
-                                    size = rel(0.9))) +
+                                    size = rel(0.8))) +
 
     labs(title = title)
 

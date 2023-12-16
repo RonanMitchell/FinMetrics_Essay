@@ -354,23 +354,21 @@ source("code/Yield_Plotter_foo.R")
 
 ###
 
-grid.arrange(
+
 
 Yield_Plotter(Data = Bonds10yr,
               Vec = Dev_Count, 
               y = BondYield_10,
               "Developed Nations",
               "Bond Yield (10-Year)",
-              "none"),
+              "none")
 
 Yield_Plotter(Data = CPI,
               Vec = Dev_Count, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom"),
-
-ncol = 1)
+              "bottom")
 
 ```
 
@@ -378,47 +376,40 @@ ncol = 1)
 
 ```{r warning = FALSE, out.height= "100%", out.width= "100%"}
 
-grid.arrange(
+
 
 Yield_Plotter(Data = Bonds10yr,
               Vec = Developing_vec, 
               y = BondYield_10,
               "Developing Nations",
               "Bond Yield (10-Year)",
-              "none"),
+              "none")
 
 Yield_Plotter(Data = CPI,
               Vec = Developing_vec, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom"),
-
-ncol = 1)
-
+              "bottom")
 ```
 
 ## BRICS Bond Yields & Inflation
 
 ```{r warning = FALSE, out.height= "100%", out.width= "100%"}
 
-grid.arrange(
-
 Yield_Plotter(Data = Bonds10yr,
               Vec = BRICS, 
               y = BondYield_10,
               "BRICS",
               "Bond Yield (10-Year)",
-              "none"),
+              "none")
 
 Yield_Plotter(Data = CPI,
               Vec = BRICS, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom"),
-
-ncol = 1)
+              "bottom")
 
 ```
 
@@ -466,7 +457,7 @@ Ridge_Plotter(Bonds10yr,
               "US", # American mean bond yield dotted line
               BondYield_10, 
               Dev_Count,
-              "Distribution of Developed Countries' Yields")
+              "Distribution of Developed Countries Yields")
 
 ```
 
@@ -493,13 +484,13 @@ source("code/Create_Map_foo.R")
 
 ###
 
-grid.arrange(
+Yield_Map <- create_map(M1, "Average Bond Yield (2-Year)", "none")
 
-create_map(M1, "Average Bond Yield (2-Year)"),
+Inflation_Map <- create_map(M2, "Average Inflation", "none")
 
-create_map(M2, "Average Inflation"),
+###
 
-ncol = 1)
+print(Yield_Map)
+print(Inflation_Map)
 
 ```
-
