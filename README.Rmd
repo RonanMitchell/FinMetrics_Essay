@@ -348,7 +348,7 @@ The function created for this is named Yield_Plotter_foo. This is a poor name, i
 
 ## Developed Nations Bond Yields & Inflation 
 
-```{r warning = FALSE, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 source("code/Yield_Plotter_foo.R")
 
@@ -378,7 +378,7 @@ heights = c(1.5,2.1))
 
 ## Developing Nations Bond Yields & Inflation 
 
-```{r warning = FALSE, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 grid.arrange(
 
@@ -405,7 +405,7 @@ heights = c(1.5,2.1))
 
 ## BRICS Bond Yields & Inflation
 
-```{r warning = FALSE, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 grid.arrange(
 
@@ -453,7 +453,7 @@ rm(list = "alpha")
   
 Here, I simply plot the distribution of bond yields for all countries in the developed world, and BRICS - in a ridge line setup. The function created for this is Ridge_Plotter_foo. The dotted line represents, in the case of the developed world, the mean bond yield of the USA. In the case of the BRICS nations, it represents the mean bond yield of South Africa. 
 
-```{r warning = FALSE, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 source("code/Ridge_Plotter_foo.R")
 
@@ -467,7 +467,7 @@ Ridge_Plotter(Bonds10yr,
 
 ```
 
-```{r warning = FALSE, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 Ridge_Plotter(Bonds10yr,
               "US", # American mean bond yield dotted line
@@ -481,7 +481,7 @@ Ridge_Plotter(Bonds10yr,
 
 With geo-spatial plotting, the general issue that most would have is to get the data into the correct format. It must be an sf object, but you can download these from the geo-spatial packages in my package selection from earlier. Inspect the Map_Data_foo carefully, it simply takes the necessary steps in a repeatable process to merge the data sets in this case to the format required. 
 
-```{r warning = FALSE}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 source("code/Map_Data_foo.R")
 
@@ -494,24 +494,22 @@ Once the data is in the correct format, plotting simply requires ggplot. This fu
 
 This geo-spatial plot simply demonstrates that being categorized by bond yield as high risk is not to be equated with being high risk due to inflation. There is definitely correlation, but the shade of countries is not identical in the two scenarios. 
 
-```{r warning = FALSE}
+```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
 
 source("code/Create_Map_foo.R")
 
 ###
 
-Yield_Map <- create_map(M1, "Average Bond Yield (2-Year)", "none")
+grid.arrange(
 
-Inflation_Map <- create_map(M2, "Average Inflation", "none")
+create_map(M1, "Average Bond Yield (2-Year)", "none"),
+
+create_map(M2, "Average Inflation", "none"),
+
+ncol = 1)
 
 # I print both in a hidden chunk in order to maintain neatness. 
 
 ```
 
-```{r echo=FALSE, warning=FALSE, out.height= "100%", out.width= "100%"}
-
-print(Yield_Map)
-print(Inflation_Map)
-
-```
 

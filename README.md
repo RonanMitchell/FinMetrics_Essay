@@ -546,11 +546,17 @@ source("code/Create_Map_foo.R")
 
 ###
 
-Yield_Map <- create_map(M1, "Average Bond Yield (2-Year)", "none")
+grid.arrange(
 
-Inflation_Map <- create_map(M2, "Average Inflation", "none")
+create_map(M1, "Average Bond Yield (2-Year)", "none"),
 
-# I print both in a hidden chunk in order to maintain neatness. 
+create_map(M2, "Average Inflation", "none"),
+
+ncol = 1)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-16-1.png" width="100%" height="100%" /><img src="README_files/figure-markdown_github/unnamed-chunk-16-2.png" width="100%" height="100%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" width="100%" height="100%" />
+
+``` r
+# I print both in a hidden chunk in order to maintain neatness. 
+```
