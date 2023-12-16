@@ -50,7 +50,7 @@ risk level of different countries.
 
 # Loading and Editing Data sets
 
-\## Importing Perscribed Data
+## Importing Perscribed Data
 
 The data sets all required similar wrangling, so I wrote a function to
 sort of get each data set into similar shape (Data_Creator_foo). The
@@ -169,7 +169,7 @@ Global_2yr <-
 # Different countries have different starting points in terms of dates, different numbers of observations each, between the two data sets. 
 ```
 
-\## Merging Perscribed Data
+## Merging Perscribed Data
 
 Because the data came in pseudo-long format, I had to write a function
 to easily merge future data sets, as, from my point of view, merging
@@ -197,7 +197,7 @@ Data_Merger_foo(Global_10yr, SA_10yr, BondYield_10, "BondYield_10")
 rm(list = c("Global_10yr", "Global_2yr", "SA_10yr", "SA_2yr"))
 ```
 
-\## Search Vectors
+## Search Vectors
 
 Below, I simply create some search/character vectors that will easily
 allow me to filter through the data and only plot specific regions later
@@ -265,7 +265,7 @@ Developing_vec <-
 # Venezuela destroyed the aesthetics of all my graphs because their yield, inflation and distribution are all ridiculous. It was visually easier to cope if they are not in the ridge or line plots. 
 ```
 
-\## Non-perscribed Data
+## Non-perscribed Data
 
 Below I download CPI data from the World Bank. This is so that I am able
 to either use CPI or inflation measures from a reputable source to
@@ -378,7 +378,7 @@ name, in fact, because it can actually plot pretty much any variable
 that is in a tidy data set and requires a line graph to be drawn. It is
 also used to plot the inflation in each case, for example.
 
-\## Developed Nations Bond Yields & Inflation
+## Developed Nations Bond Yields & Inflation
 
 ``` r
 source("code/Yield_Plotter_foo.R")
@@ -404,9 +404,9 @@ Yield_Plotter(Data = CPI,
 ncol = 1)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" width="85%" height="85%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" width="100%" height="100%" />
 
-\## Developing Nations Bond Yields & Inflation
+## Developing Nations Bond Yields & Inflation
 
 ``` r
 grid.arrange(
@@ -428,9 +428,9 @@ Yield_Plotter(Data = CPI,
 ncol = 1)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" width="85%" height="85%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" width="100%" height="100%" />
 
-\## BRICS Bond Yields & Inflation
+## BRICS Bond Yields & Inflation
 
 ``` r
 grid.arrange(
@@ -452,7 +452,7 @@ Yield_Plotter(Data = CPI,
 ncol = 1)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" width="85%" height="85%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" width="100%" height="100%" />
 
 ``` r
 # Housekeeping 
@@ -472,7 +472,7 @@ rm(
 rm(list = "alpha")
 ```
 
-\## Ridge Plots
+## Ridge Plots
 
 Here, I simply plot the distribution of bond yields for all countries in
 the developed world, and BRICS - in a ridge line setup. The function
@@ -495,7 +495,7 @@ Ridge_Plotter(Bonds10yr,
 
     ## Picking joint bandwidth of 0.236
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-12-1.png" width="85%" height="85%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-12-1.png" width="100%" height="100%" />
 
 ``` r
 Ridge_Plotter(Bonds10yr,
@@ -507,9 +507,9 @@ Ridge_Plotter(Bonds10yr,
 
     ## Picking joint bandwidth of 0.286
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-13-1.png" width="85%" height="85%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-13-1.png" width="100%" height="100%" />
 
-\## Geospatial Plotting
+## Geospatial Plotting
 
 With geo-spatial plotting, the general issue that most would have is to
 get the data into the correct format. It must be an sf object, but you
@@ -549,4 +549,4 @@ create_map(M2, "Average Inflation"),
 ncol = 1)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" width="100%" height="85%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" width="100%" height="100%" />
