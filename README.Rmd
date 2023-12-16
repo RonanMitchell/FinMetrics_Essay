@@ -508,7 +508,7 @@ Inflation_Map <- create_map(M2, "Average Inflation", "none")
 
 ```
 
-```{r include=FALSE, warning=FALSE, out.height= "100%", out.width= "100%"}
+```{r echo=FALSE, warning=FALSE, out.height= "100%", out.width= "100%"}
 
 print(Yield_Map)
 print(Inflation_Map)
