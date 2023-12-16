@@ -354,21 +354,25 @@ source("code/Yield_Plotter_foo.R")
 
 ###
 
-
+grid.arrange(
 
 Yield_Plotter(Data = Bonds10yr,
               Vec = Dev_Count, 
               y = BondYield_10,
               "Developed Nations",
               "Bond Yield (10-Year)",
-              "none")
+              "none"),
 
 Yield_Plotter(Data = CPI,
               Vec = Dev_Count, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom")
+              "bottom"),
+
+ncol = 1,
+
+heights = c(1.5,2.1))
 
 ```
 
@@ -376,40 +380,52 @@ Yield_Plotter(Data = CPI,
 
 ```{r warning = FALSE, out.height= "100%", out.width= "100%"}
 
-
+grid.arrange(
 
 Yield_Plotter(Data = Bonds10yr,
               Vec = Developing_vec, 
               y = BondYield_10,
               "Developing Nations",
               "Bond Yield (10-Year)",
-              "none")
+              "none"),
 
 Yield_Plotter(Data = CPI,
               Vec = Developing_vec, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom")
+              "bottom"),
+
+ncol = 1,
+
+heights = c(1.5,2.1))
+
+
 ```
 
 ## BRICS Bond Yields & Inflation
 
 ```{r warning = FALSE, out.height= "100%", out.width= "100%"}
 
+grid.arrange(
+
 Yield_Plotter(Data = Bonds10yr,
               Vec = BRICS, 
               y = BondYield_10,
               "BRICS",
               "Bond Yield (10-Year)",
-              "none")
+              "none"),
 
 Yield_Plotter(Data = CPI,
               Vec = BRICS, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom")
+              "bottom"),
+
+ncol = 1,
+
+heights = c(2,2.5))
 
 ```
 
@@ -478,7 +494,7 @@ Once the data is in the correct format, plotting simply requires ggplot. This fu
 
 This geo-spatial plot simply demonstrates that being categorized by bond yield as high risk is not to be equated with being high risk due to inflation. There is definitely correlation, but the shade of countries is not identical in the two scenarios. 
 
-```{r warning = FALSE, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE}
 
 source("code/Create_Map_foo.R")
 
@@ -488,9 +504,14 @@ Yield_Map <- create_map(M1, "Average Bond Yield (2-Year)", "none")
 
 Inflation_Map <- create_map(M2, "Average Inflation", "none")
 
-###
+# I print both in a hidden chunk in order to maintain neatness. 
+
+```
+
+```{r include=FALSE, warning=FALSE, out.height= "100%", out.width= "100%"}
 
 print(Yield_Map)
 print(Inflation_Map)
 
 ```
+
