@@ -385,74 +385,76 @@ source("code/Yield_Plotter_foo.R")
 
 ###
 
-grid.arrange(
+
 
 Yield_Plotter(Data = Bonds10yr,
               Vec = Dev_Count, 
               y = BondYield_10,
               "Developed Nations",
               "Bond Yield (10-Year)",
-              "none"),
+              "none")
+```
 
+<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" width="100%" height="100%" />
+
+``` r
 Yield_Plotter(Data = CPI,
               Vec = Dev_Count, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom"),
-
-ncol = 1)
+              "bottom")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-8-1.png" width="100%" height="100%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-8-2.png" width="100%" height="100%" />
 
 ## Developing Nations Bond Yields & Inflation
 
 ``` r
-grid.arrange(
-
 Yield_Plotter(Data = Bonds10yr,
               Vec = Developing_vec, 
               y = BondYield_10,
               "Developing Nations",
               "Bond Yield (10-Year)",
-              "none"),
+              "none")
+```
 
+<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" width="100%" height="100%" />
+
+``` r
 Yield_Plotter(Data = CPI,
               Vec = Developing_vec, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom"),
-
-ncol = 1)
+              "bottom")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" width="100%" height="100%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-9-2.png" width="100%" height="100%" />
 
 ## BRICS Bond Yields & Inflation
 
 ``` r
-grid.arrange(
-
 Yield_Plotter(Data = Bonds10yr,
               Vec = BRICS, 
               y = BondYield_10,
               "BRICS",
               "Bond Yield (10-Year)",
-              "none"),
+              "none")
+```
 
+<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" width="100%" height="100%" />
+
+``` r
 Yield_Plotter(Data = CPI,
               Vec = BRICS, 
               y = Inflation,
               "",
               "Inflation",
-              "bottom"),
-
-ncol = 1)
+              "bottom")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" width="100%" height="100%" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-10-2.png" width="100%" height="100%" />
 
 ``` r
 # Housekeeping 
@@ -502,7 +504,7 @@ Ridge_Plotter(Bonds10yr,
               "US", # American mean bond yield dotted line
               BondYield_10, 
               Dev_Count,
-              "Distribution of Developed Countries' Yields")
+              "Distribution of Developed Countries Yields")
 ```
 
     ## Picking joint bandwidth of 0.286
@@ -540,13 +542,19 @@ source("code/Create_Map_foo.R")
 
 ###
 
-grid.arrange(
+Yield_Map <- create_map(M1, "Average Bond Yield (2-Year)", "none")
 
-create_map(M1, "Average Bond Yield (2-Year)"),
+Inflation_Map <- create_map(M2, "Average Inflation", "none")
 
-create_map(M2, "Average Inflation"),
+###
 
-ncol = 1)
+print(Yield_Map)
 ```
 
 <img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" width="100%" height="100%" />
+
+``` r
+print(Inflation_Map)
+```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-15-2.png" width="100%" height="100%" />
