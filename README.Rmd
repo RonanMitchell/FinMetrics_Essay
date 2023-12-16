@@ -348,7 +348,7 @@ The function created for this is named Yield_Plotter_foo. This is a poor name, i
 
   ## Developed Nations Bond Yields & Inflation 
 
-```{r warning = FALSE, out.height= 85%, out.width= 85%}
+```{r warning = FALSE, out.height= "85%", out.width= "85%"}
 
 source("code/Yield_Plotter_foo.R")
 
@@ -376,7 +376,7 @@ ncol = 1)
 
   ## Developing Nations Bond Yields & Inflation 
 
-```{r warning = FALSE, out.height= 85%, out.width= 85%}
+```{r warning = FALSE, out.height= "85%", out.width= "85%"}
 
 grid.arrange(
 
@@ -400,7 +400,7 @@ ncol = 1)
 
   ## BRICS Bond Yields & Inflation
 
-```{r warning = FALSE, out.height= 85%, out.width= 85%}
+```{r warning = FALSE, out.height= "85%", out.width= "85%"}
 
 grid.arrange(
 
@@ -446,7 +446,7 @@ rm(list = "alpha")
   
 Here, I simply plot the distribution of bond yields for all countries in the developed world, and BRICS - in a ridge line setup. The function created for this is Ridge_Plotter_foo. The dotted line represents, in the case of the developed world, the mean bond yield of the USA. In the case of the BRICS nations, it represents the mean bond yield of South Africa. 
 
-```{r warning = FALSE, out.height= 85%, out.width= 85%}
+```{r warning = FALSE, out.height= "85%", out.width= "85%"}
 
 source("code/Ridge_Plotter_foo.R")
 
@@ -460,7 +460,7 @@ Ridge_Plotter(Bonds10yr,
 
 ```
 
-```{r warning = FALSE, out.height= 85%, out.width= 85%}
+```{r warning = FALSE, out.height= "85%", out.width= "85%"}
 
 Ridge_Plotter(Bonds10yr,
               "US", # American mean bond yield dotted line
@@ -487,7 +487,7 @@ Once the data is in the correct format, plotting simply requires ggplot. This fu
 
 This geo-spatial plot simply demonstrates that being categorized by bond yield as high risk is not to be equated with being high risk due to inflation. There is definitely correlation, but the shade of countries is not identical in the two scenarios. 
 
-```{r warning = FALSE, out.height= 85%, out.width= 100%}
+```{r warning = FALSE, out.height= "85%", out.width= "100%"}
 
 source("code/Create_Map_foo.R")
 
