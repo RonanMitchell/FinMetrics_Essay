@@ -16,7 +16,7 @@ Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
                       xmax = xmax,
                       ymin = ymin,
                       ymax = ymax),
-                  fill = "blue",
+                  fill = "blue4",
                   alpha = alpha) +
 
         geom_rect(data = HV2,
@@ -24,23 +24,7 @@ Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
                       xmax = xmax,
                       ymin = ymin,
                       ymax = ymax),
-                  fill = "blue",
-                  alpha = alpha) +
-
-        geom_rect(data = HV3,
-                  aes(xmin = xmin,
-                      xmax = xmax,
-                      ymin = ymin,
-                      ymax = ymax),
-                  fill = "blue",
-                  alpha = alpha) +
-
-        geom_rect(data = HV4,
-                  aes(xmin = xmin,
-                      xmax = xmax,
-                      ymin = ymin,
-                      ymax = ymax),
-                  fill = "blue",
+                  fill = "blue4",
                   alpha = alpha) +
 
         geom_rect(data = HV5,
@@ -48,7 +32,7 @@ Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
                       xmax = xmax,
                       ymin = ymin,
                       ymax = ymax),
-                  fill = "red",
+                  fill = "red4",
                   alpha = alpha) +
 
         geom_rect(data = HV6,
@@ -56,7 +40,7 @@ Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
                       xmax = xmax,
                       ymin = ymin,
                       ymax = ymax),
-                  fill = "red",
+                  fill = "red4",
                   alpha = alpha) +
 
         geom_rect(data = HV7,
@@ -64,7 +48,7 @@ Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
                       xmax = xmax,
                       ymin = ymin,
                       ymax = ymax),
-                  fill = "red",
+                  fill = "red4",
                   alpha = alpha) +
 
         geom_rect(data = HV8,
@@ -72,7 +56,7 @@ Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
                       xmax = xmax,
                       ymin = ymin,
                       ymax = ymax),
-                  fill = "red",
+                  fill = "red4",
                   alpha = alpha) +
 
         geom_line(aes(x = as.Date(date),

@@ -44,7 +44,7 @@ High_Vol <-
 
                 group_by(SemiAnnual) %>%
 
-                summarise(SD = mean({{x}}) * sqrt(6)) %>%
+                summarise(SD = mean({{x}})) %>%
 
                 mutate(TopQtile = quantile(SD, {{quantile}})) %>%
 

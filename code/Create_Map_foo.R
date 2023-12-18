@@ -23,7 +23,7 @@ ggplot(data = df) +
                                         "deeppink"),
                          na.value = "grey80",
                          name = "",
-                         limits = c(1, 25)) +
+                         limits = c(1, 26)) +
 
     xlab("") + ylab("") +
 
