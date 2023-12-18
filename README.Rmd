@@ -1,7 +1,7 @@
 ---
 output: 
  md_document:
-   variant: markdown_github
+   variant: gfm
 ---
 The purpose of this README is to guide the reader through the decisions I made when writing my final Financial Econometrics research assignment (Masters in Economics). I selected the following question:
 
@@ -357,11 +357,11 @@ source("code/Yield_Plotter_foo.R")
 
 grid.arrange(
 
-Yield_Plotter(Data = Bonds10yr,
+Yield_Plotter(Data = Bonds2yr,
               Vec = Dev_Count, 
-              y = BondYield_10,
+              y = BondYield_2,
               "Developed Nations",
-              "Bond Yield (10-Year)",
+              "Bond Yield (2-Year)",
               "none"),
 
 Yield_Plotter(Data = CPI,
@@ -383,11 +383,11 @@ heights = c(1.5,2.1))
 
 grid.arrange(
 
-Yield_Plotter(Data = Bonds10yr,
+Yield_Plotter(Data = Bonds2yr,
               Vec = Developing_vec, 
-              y = BondYield_10,
+              y = BondYield_2,
               "Developing Nations",
-              "Bond Yield (10-Year)",
+              "Bond Yield (2-Year)",
               "none"),
 
 Yield_Plotter(Data = CPI,
@@ -410,11 +410,11 @@ heights = c(1.5,2.1))
 
 grid.arrange(
 
-Yield_Plotter(Data = Bonds10yr,
+Yield_Plotter(Data = Bonds2yr,
               Vec = BRICS, 
-              y = BondYield_10,
+              y = BondYield_2,
               "BRICS",
-              "Bond Yield (10-Year)",
+              "Bond Yield (2-Year)",
               "none"),
 
 Yield_Plotter(Data = CPI,
