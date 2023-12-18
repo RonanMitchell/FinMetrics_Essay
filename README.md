@@ -267,47 +267,49 @@ Developing_vec <-
 
 ## Non-perscribed Data
 
-Below I download CPI data from the World Bank. This is so that I am able
-to either use CPI or inflation measures from a reputable source to
-contextualized bond yields. Inflation is one of the only true economic
-risks that can face a bond - in normal times - and as such I think it is
-worth including in the analysis. I have also downloaded VIX and US-EU
-exchange rate data from FRED.
+Below I download CPI and GDP Growth data from the World Bank. This is so
+that I am able to either use CPI, inflation, or GDP measures from a
+reputable source to contextualize bond yields. Inflation is one of the
+only pure economic risks that can face a bond - in normal times - and as
+such I think it is worth including in the analysis. I created a function
+to import the data from the World Bank as it is always in the same,
+messy and unclean format. So World_Bank_foo() gets it into the format I
+want. This was useful as I downloaded many data sets.
 
-With this VIX and US exchange rate data, I will not really be plotting
-them in a traditional way. They will be used to extract high volatility
-times so that I can add them to the line graphs as geom_rect() objects
-so as to be a contextual backdrop for the inflation and yield movements
-we observe. This will aid the discussion.
+I have also downloaded VIX and US-EU exchange rate data from FRED. With
+this VIX and US exchange rate data, I will not really be plotting them
+in a traditional way. They will be used to extract high volatility times
+so that I can add them to the line graphs as geom_rect() objects so as
+to be a contextual backdrop for the inflation and yield movements we
+observe. This will aid the discussion.
 
 ``` r
+# Search vector
+
+All_Names <- unique(Bonds2yr$Name)
+
+###
+
+source("code/World_Bank_foo.R")
+
+# World Bank growth rates: 
+
+Growth_Rates <- 
+    
+    World_Bank_foo(read.csv("data/GDP Growth.csv"), # import data
+                   
+                   All_Names, # only these countries 
+                   
+                   Growth) # what to name gathered column
+
+
 # world bank CPI measure, I have only downloaded since 2010. 
 
-CPI <- read.csv("data/Inflation Data.csv") %>%
+CPI <- 
     
-  `colnames<-`(sub("^X", "", colnames(.))) %>% # Excel problem
+  World_Bank_foo(read.csv("data/Inflation Data.csv"), All_Names, CPI) %>% 
     
-  mutate(Name = ifelse(Name == "China", "CHINA",
-                       
-                ifelse(Name == "New Zealand", "NZ",
-                              
-                ifelse(Name == "United Kingdom", "UK", 
-                                     
-                ifelse(Name == "United States", "US",
-                       
-                ifelse(Name == "Russian Federation", "Russia",
-                       
-                ifelse(Name == "Venezuela, RB", "Venezuela",
-                                            
-                ifelse(Name == "South Africa", "ZA", Name)
-                
-                ))))))) %>%
-    
-  filter(Name %in% Bonds2yr$Name) %>% # select same countries
-    
-  gather(date, CPI, -Name) %>%
-    
-  mutate(date = as.Date(paste0(date, "-01-01"))) %>% 
+    # I also create an inflation column: 
     
   arrange(Name, date) %>%
     
@@ -315,11 +317,13 @@ CPI <- read.csv("data/Inflation Data.csv") %>%
     
   mutate(Inflation = (CPI - lag(CPI)) / lag(CPI) * 100) %>% # inflation
     
-  replace_na(list(Inflation = 0)) %>% # first date is zero inflation 
+  filter(date > "2009-01-01") %>% # first date is zero inflation 
     
   mutate(CPI = (CPI - 100)) %>% 
     
   ungroup()
+
+###
 ```
 
 ``` r
@@ -345,9 +349,9 @@ US_Exchange <- read.csv("data/US to EU Exchange.csv") %>%
 
 source("code/High_Vol_foo.R")
 
-VIX_Vol <- High_Vol_foo(VIX_Data, VIX, 0.67, type = "")
+VIX_Vol <- High_Vol_foo(VIX_Data, VIX, 0.8, type = "")
 
-US_Vol <- High_Vol_foo(US_Exchange, Rate, 0.67, type = "sd")
+US_Vol <- High_Vol_foo(US_Exchange, Rate, 0.8, type = "sd")
 
 # These high volatility periods are used to construct the geom_rects to indicate them on the ggplot graphs.
 
@@ -468,7 +472,15 @@ rm(
     list = c("HV1", "HV2", "HV3", "HV4", "HV5", "HV6", "HV7", "HV8")
     
     )
+```
 
+    ## Warning in rm(list = c("HV1", "HV2", "HV3", "HV4", "HV5", "HV6", "HV7", :
+    ## object 'HV3' not found
+
+    ## Warning in rm(list = c("HV1", "HV2", "HV3", "HV4", "HV5", "HV6", "HV7", :
+    ## object 'HV4' not found
+
+``` r
 rm(
     
     list = c("VIX_Data", "US_Exchange", "US_Vol", "VIX_Vol")
@@ -529,6 +541,7 @@ source("code/Map_Data_foo.R")
 
 M1 <- Map_Data_foo(Bonds2yr, BondYield_2)
 M2 <- Map_Data_foo(CPI, Inflation)
+M3 <- Map_Data_foo(Growth_Rates, Growth)
 ```
 
 Once the data is in the correct format, plotting simply requires ggplot.
@@ -558,5 +571,75 @@ ncol = 1)
 <img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" width="100%" height="100%" />
 
 ``` r
-# I print both in a hidden chunk in order to maintain neatness. 
+create_map(M3, "Average GDP Growth", "none")
 ```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-16-1.png" width="100%" height="100%" />
+
+``` r
+rm(list = c("M1", "M2", "M3"))
+```
+
+# Yield Spreads
+
+In order to plot the yield spreads (to answer the main question), I
+created Spread_Plotter(). It is a function that takes a data set,
+subtracts the US yield from the yield of all other countries on all
+dates, and then plots the resulting spread with a horizontal line at
+zero to indicate the US-zero level.
+
+``` r
+source("code/Spread_Plotter.R")
+
+###
+
+grid.arrange(
+
+   Spread_Plotter(Bonds2yr, 
+                  BondYield_2, 
+                  Dev_Count, 
+                  "BondYield_2", 
+                  "Developed Countries", 
+                  "2-Year", 
+                  "none"), 
+
+   Spread_Plotter(Bonds10yr, 
+                  BondYield_10, 
+                  Dev_Count, 
+                  "BondYield_10", 
+                  "", 
+                  "10-Year", 
+                  "bottom"),
+
+   ncol = 1,
+
+   heights = c(1.5,2))
+```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-18-1.png" width="100%" height="100%" />
+
+``` r
+grid.arrange(
+
+   Spread_Plotter(Bonds2yr, 
+                  BondYield_2, 
+                  BRICS, 
+                  "BondYield_2",
+                  "BRICS", 
+                  "2-Year", 
+                  "none"), 
+
+   Spread_Plotter(Bonds10yr, 
+                  BondYield_10, 
+                  BRICS, 
+                  "BondYield_10", 
+                  "", 
+                  "10-Year", 
+                  "bottom"),
+
+   ncol = 1,
+
+   heights = c(1.5,2))
+```
+
+<img src="README_files/figure-markdown_github/unnamed-chunk-19-1.png" width="100%" height="100%" />
