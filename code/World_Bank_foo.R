@@ -21,7 +21,7 @@ World_Bank_foo <- function(data, Vec, target_column) {
 
         gather(date, {{ target_column }}, -Name) %>%
 
-        mutate(date = as.Date(paste0(date, "-01-01")))
+        mutate(date = as.Date(paste0(date, "-07-01"))) # midpoint, basically
 
     return(transformed_data)
 
