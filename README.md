@@ -1,7 +1,7 @@
 This is the README for an R project. The purpose of this README is to
 guide the reader through the programming decisions I made when plotting
-bond yields calculating yield spreads in order to answer the following
-question:
+bond yields and calculating yield spreads in order to answer the
+following question:
 
 - *“Study bond yield spreads - you have 10yr and 2yr bond yields.
   Calculate the spread and see if you can find any interesting patterns
