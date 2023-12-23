@@ -1,5 +1,5 @@
 ---
-title: "Bond Yields"
+title: "The South African Reality: A Risk Analysis of Yield Spreads"
 documentclass: elsarticle
 Thesis_FP: no
 output:
@@ -7,7 +7,7 @@ output:
     keep_tex: yes
     template: Tex/TexDefault.txt
     fig_width: null
-    fig_height: 3.5
+    fig_height: null
   html_document:
     df_print: paged
 Author1: Ronan Morris
@@ -31,66 +31,134 @@ linestretch: 1.2
 link-citations: yes
 AddTitle: yes
 ---
-
 ```{r include=FALSE, warning=FALSE}
 
 rm(list = ls())
 
 gc()
 
-###
+library(knitr)
 
-library(tidyverse)
+```
+# Introduction 
+
+# Literature Review 
+
+# Descriptive Statistics
+
+## Bond Yields 
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of Developed Nations \\label{Figure1.1}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
+
+knitr::include_graphics("Images/Developed_Bond_Yields.png", 
+                         dpi = 300)
 
 ```
 
-# Required Packages:
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of Developing Nations \\label{Figure1.2}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
 
-* tidyverse
-
-# Loading and Editing Data sets
-
-```{r}
-
-  # 2 year Global Bonds.
-
-Global_2yr <- readRDS("data/BondYields_2Y.rds") %>%
- 
-     mutate(Name = gsub("_2yr", "", Name)) %>% 
-    
-     filter(date <= "2022-03-31") # last available date in SA_2Yr
-
-  # 10 year Global bonds.
-
-Global_10yr <- readRDS("data/BondYields_10Y.rds") %>% 
-    
-    mutate(Name = gsub("_10Yr", "", Name)) %>% 
-    
-    filter(Name %in% Global_2yr$Name) %>% # Same bonds only
-    
-    filter(date <= "2022-03-31")
-
-  # 2 year South African (SA) bonds. 
-
-SA_2yr <- readRDS("data/BondYields_2Y_SA.rds") %>% 
-    
-    filter(date >= first(Global_10yr$date))
-
-  # 10 Year SA bonds.
-
-SA_10yr <- readRDS("data/BondYields_10Y_SA.rds") %>% 
-    
-    filter(date >= first(Global_10yr$date) & date <= "2022-03-31")
-
-# the data sets all now start at the same date, and the global sets include the same bonds. 
-
-# At this point it is clear that we have COVID-19 Data. Perhaps we can do a sort of crisis bond yield analysis? 
+knitr::include_graphics("Images/Developing_Bonds_Yields.png", 
+                         dpi = 300)
 
 ```
 
-```{r}
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of BRICS Nations \\label{Figure1.3}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
 
-
+knitr::include_graphics("Images/BRICS_Bonds_Yields.png", 
+                         dpi = 300)
 
 ```
 
+## Yield Distributions 
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yield Distributions of Developed Nations \\label{Figure2.1}", out.height = "50%", out.width = "90%"}
+
+knitr::include_graphics("Images/Developed_Distributions.png", 
+                         dpi = 300)
+
+```
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yield Distributions of BRICS Nations \\label{Figure2.2}", fig.ext = 'png', out.height = "50%", out.width = "90%"}
+
+knitr::include_graphics("Images/BRICS_Distributions.png", 
+                         dpi = 300)
+
+```
+
+## Geo-Spatial Analysis 
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Average Bond Yield and Inflation \\label{Figure3.1}", fig.ext = 'png', out.height = "50%", out.width = "90%"}
+
+knitr::include_graphics("Images/Geospatial_1.png", 
+                         dpi = 300)
+
+```
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Average GDP Growth \\label{Figure3.2}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
+
+knitr::include_graphics("Images/Geospatial_2.png", 
+                         dpi = 300)
+
+```
+
+# Yield Spreads 
+
+## Developed Nations
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Developed World Bond Yield Spreads \\label{Figure4.1}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
+
+knitr::include_graphics("Images/Developed_Spreads.png", 
+                         dpi = 300)
+
+```
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "South Africa vs Germany Yield Spread \\label{Figure4.2}", fig.ext = 'png', out.height = "45%", out.width = "80%"}
+
+knitr::include_graphics("Images/SA-Germany.png", 
+                         dpi = 300)
+
+```
+
+## BRICS Nations 
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "BRICS Bond Yield Spreads \\label{Figure4.3}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
+
+knitr::include_graphics("Images/BRICS_Spreads.png", 
+                         dpi = 300)
+
+```
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "SA vs China Yield Spread \\label{Figure4.4}", fig.ext = 'png', out.height = "45%", out.width = "80%"}
+
+knitr::include_graphics("Images/SA-China.png", 
+                         dpi = 300)
+
+```
+
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "SA vs India Yield Spread \\label{Figure4.5}", fig.ext = 'png', out.height = "45%", out.width = "80%"}
+
+knitr::include_graphics("Images/SA-India.png", 
+                         dpi = 300)
+
+```
+
+# Conclusion 
+
+\newpage 
+
+# Bibliography 
+
+CBOE Volatility Index: VIX [Online]. [n.d.]. Available: https://fred.stlouisfed.org/series/VIXCLS [2023, December 10]. 
+
+Consumer Price Index (2010 = 100) [Online]. [n.d.]. Available: https://data.worldbank.org/indicator/FP.CPI.TOTL?end=2022&start=2010&view=chart
+[2023, December 10]. 
+
+He, Z., Krishnamurthy, A., & Milbradt, K. 2016. What Makes US Government Bonds Safe Assets? *The American Economic Review*, 106(5):519-523. 
+
+Lo Conte, R. 2009. Government Bond Yields: A Survey. *Giornale degli Economisti e Annali di Economia*, 68(3):341-369. 
+
+Ludvigson, S. C. & Serena, N. G. 2009. Macro Factors in Bond Risk Premia. *The Review of Financial Studies*, 22(12):5027-5067. 
+
+Manganelli, S. & Wolswijk, G. 2009. What Drives Spreads in thw Euro Area Bond Market? *Economic Policy*, 24(58):191-240. 
+
+U.S. to Euro Spot Exchange Rate [Online]. [n.d.]. Available: https://fred.stlouisfed.org/series/DEXUSEU [2023, December 10]. 

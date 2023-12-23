@@ -3,7 +3,7 @@ Ridge_Plotter <- function(Data, name, var, countries, title){
 
     mean_yield <-
 
-        Data %>%
+        {{Data}} %>%
 
         filter(Name == {{name}}) %>%
 
@@ -12,7 +12,7 @@ Ridge_Plotter <- function(Data, name, var, countries, title){
         pull(mean_yield)
 
 
-    Data %>%
+    {{Data}} %>%
 
         filter(Name %in% {{countries}}) %>%
 

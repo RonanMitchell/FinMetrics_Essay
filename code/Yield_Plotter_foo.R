@@ -1,7 +1,7 @@
 Yield_Plotter <- function(Data, Vec, y, title, subtitle, legend){
 
 
-    Data %>%
+    {{Data}} %>%
 
         filter(Name %in% {{Vec}}) %>%
 

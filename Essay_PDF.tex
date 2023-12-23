@@ -1,0 +1,393 @@
+\documentclass[11pt,preprint, authoryear]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
+\usepackage{setspace}
+\setstretch{1.2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[round]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+\newenvironment{CSLReferences}[2]{%
+}
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
+
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
+
+\begin{document}
+
+
+
+\begin{frontmatter}  %
+
+\title{The South African Reality: A Risk Analysis of Yield Spreads}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Ronan Morris}
+\ead{22876634}
+
+
+
+
+
+\address[Add1]{Stellenbosch University}
+
+
+
+\vspace{1cm}
+
+
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+\setcounter{footnote}{0}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{\footnotesize Page \thepage}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\hypertarget{literature-review}{%
+\section{Literature Review}\label{literature-review}}
+
+\hypertarget{descriptive-statistics}{%
+\section{Descriptive Statistics}\label{descriptive-statistics}}
+
+\hypertarget{bond-yields}{%
+\subsection{Bond Yields}\label{bond-yields}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.53\textheight]{Images/Developed_Bond_Yields} 
+
+}
+
+\caption{Bond Yields of Developed Nations \label{Figure1.1}}\label{fig:unnamed-chunk-2}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.53\textheight]{Images/Developing_Bonds_Yields} 
+
+}
+
+\caption{Bond Yields of Developing Nations \label{Figure1.2}}\label{fig:unnamed-chunk-3}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.53\textheight]{Images/BRICS_Bonds_Yields} 
+
+}
+
+\caption{Bond Yields of BRICS Nations \label{Figure1.3}}\label{fig:unnamed-chunk-4}
+\end{figure}
+
+\hypertarget{yield-distributions}{%
+\subsection{Yield Distributions}\label{yield-distributions}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth,height=0.5\textheight]{Images/Developed_Distributions} 
+
+}
+
+\caption{Bond Yield Distributions of Developed Nations \label{Figure2.1}}\label{fig:unnamed-chunk-5}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth,height=0.5\textheight]{Images/BRICS_Distributions} 
+
+}
+
+\caption{Bond Yield Distributions of BRICS Nations \label{Figure2.2}}\label{fig:unnamed-chunk-6}
+\end{figure}
+
+\hypertarget{geo-spatial-analysis}{%
+\subsection{Geo-Spatial Analysis}\label{geo-spatial-analysis}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth,height=0.5\textheight]{Images/Geospatial_1} 
+
+}
+
+\caption{Average Bond Yield and Inflation \label{Figure3.1}}\label{fig:unnamed-chunk-7}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.5\textheight]{Images/Geospatial_2} 
+
+}
+
+\caption{Average GDP Growth \label{Figure3.2}}\label{fig:unnamed-chunk-8}
+\end{figure}
+
+\hypertarget{yield-spreads}{%
+\section{Yield Spreads}\label{yield-spreads}}
+
+\hypertarget{developed-nations}{%
+\subsection{Developed Nations}\label{developed-nations}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.5\textheight]{Images/Developed_Spreads} 
+
+}
+
+\caption{Developed World Bond Yield Spreads \label{Figure4.1}}\label{fig:unnamed-chunk-9}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.45\textheight]{Images/SA-Germany} 
+
+}
+
+\caption{South Africa vs Germany Yield Spread \label{Figure4.2}}\label{fig:unnamed-chunk-10}
+\end{figure}
+
+\hypertarget{brics-nations}{%
+\subsection{BRICS Nations}\label{brics-nations}}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.5\textheight]{Images/BRICS_Spreads} 
+
+}
+
+\caption{BRICS Bond Yield Spreads \label{Figure4.3}}\label{fig:unnamed-chunk-11}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.45\textheight]{Images/SA-China} 
+
+}
+
+\caption{SA vs China Yield Spread \label{Figure4.4}}\label{fig:unnamed-chunk-12}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth,height=0.45\textheight]{Images/SA-India} 
+
+}
+
+\caption{SA vs India Yield Spread \label{Figure4.5}}\label{fig:unnamed-chunk-13}
+\end{figure}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\newpage
+
+\hypertarget{bibliography}{%
+\section{Bibliography}\label{bibliography}}
+
+CBOE Volatility Index: VIX {[}Online{]}. {[}n.d.{]}. Available:
+\url{https://fred.stlouisfed.org/series/VIXCLS} {[}2023, December 10{]}.
+
+Consumer Price Index (2010 = 100) {[}Online{]}. {[}n.d.{]}. Available:
+\url{https://data.worldbank.org/indicator/FP.CPI.TOTL?end=2022\&start=2010\&view=chart}
+{[}2023, December 10{]}.
+
+He, Z., Krishnamurthy, A., \& Milbradt, K. 2016. What Makes US
+Government Bonds Safe Assets? \emph{The American Economic Review},
+106(5):519-523.
+
+Lo Conte, R. 2009. Government Bond Yields: A Survey. \emph{Giornale
+degli Economisti e Annali di Economia}, 68(3):341-369.
+
+Ludvigson, S. C. \& Serena, N. G. 2009. Macro Factors in Bond Risk
+Premia. \emph{The Review of Financial Studies}, 22(12):5027-5067.
+
+Manganelli, S. \& Wolswijk, G. 2009. What Drives Spreads in thw Euro
+Area Bond Market? \emph{Economic Policy}, 24(58):191-240.
+
+U.S. to Euro Spot Exchange Rate {[}Online{]}. {[}n.d.{]}. Available:
+\url{https://fred.stlouisfed.org/series/DEXUSEU} {[}2023, December
+10{]}.
+
+\bibliography{Tex/ref}
+
+
+
+
+
+\end{document}

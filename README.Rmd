@@ -70,7 +70,6 @@ The provided data sets all required similar wrangling, so I wrote a function to 
 
 ```{r}
 
-
 source("code/Data_Creator_foo.R")
 
 # 2 year Global Bonds.
