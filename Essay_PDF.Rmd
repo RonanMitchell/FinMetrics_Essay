@@ -44,62 +44,27 @@ library(knitr)
 
 # Literature Review 
 
-## Calculation of Yield
+## The Calculation of Bond Yield
 
-The assessment of bond profitability differs from that of equities and other risky assets. Financial practitioners often use the term "yield" in order to contextualize bond profitability. This can take various forms; Current Yield, Yield-to-Call, Yield-to-Worst, and Yield-to-Maturity (YTM). The widely adopted practice involves employing YTM to calculate yield spreads, as is the case in this paper. As in Lawrence & Shankar (2007:92), the relationship between a bind price and YTM is calculated as: 
+The assessment of bond profitability differs markedly from the evaluation of equities and other risky assets. Financial practitioners often use the term "yield" in order to contextualize bond performance. This can take various forms; Current Yield, Yield-to-Call, Yield-to-Worst, and Yield-to-Maturity (YTM). The widely adopted practice in finance involves employing YTM to calculate yield spreads, as is the case in this paper. In Lawrence & Shankar (2007:92), the relationship between a bond price and YTM is calculated as: 
 
 \[ P = \frac{C}{(1+i)} + \frac{C}{(1+i)^2} + \ldots + \frac{M}{(1+i)^n} \]
 
-Where *P* is the price of the bond, *C* is the coupon rate, *M* is the principal payment, and *i* - which can be inferred) - is the YTM. From this, it can be concluded that, *ceteris paribus*, there is an inverse relationship between the price and yield of a bond. A core assumption of this formula is that it assumes the bond buyer will hold until maturity and reinvest each interest payment at the same interest rate. It is simply an estimate of one can expect to earn from purchasing a given bond. 
-
-
-It is sometimes approximated as:
+In the above equation, *P* is the price of the given bond, *C* is the coupon rate, *M* is the principal payment, and *i* - which can be inferred - is the YTM. From this, it can be concluded that, *ceteris paribus*, there is an inverse relationship between the price of a bond and the YTM. A core assumption of this formula is that the bond buyer will hold until maturity and reinvest each interest payment at the same rate. It is simply an estimate of what one should earn from purchasing a bond. The YTM is often approximated as:
 
 \[ YTM \approx \frac{C + \frac{FV - PV}{n}}{\frac{FV + PV}{2}} \]
 
-In this case, the *FV* is the face value of the security and the *PV* would be the present value or price of the security. 
+In this case, the *FV* is the face value of the security and the *PV* would be the present value or price of the security. This equation once again demonstrates the inverse relationship between the price and YTM of a bond. This relationship is a useful indicator when attempting to understand the level of risk that a bond has. The yield is used to differentiate between the risk profiles of two or more bonds.  
 
-## Implications of Yield 
+## The Economic Implications of Bond Yields
 
-Yield: Analysts usually refer to yield-to-maturity of a risky bond as a comparable measure of value. The yield itself can be split in two major components: the risk-free rate and the risk premium. While the risk-free rate only refers to time preferences, the risk premium includes many factors. The risk premium is indeed the additional increment in the yield that is supposed to compensate the investor for bearing different types of risk (credit or default, liquidity risk, exchange rate risk) as well as to compensate for different taxation treatments and/or marketability conditions. Accordingly, both the theoretical and empirical literature in finance has regarded differences in yield to maturity of two separate bonds, with same characteristics, as a measure of the incremental risk of one over the other (Lo Conte, 2009:344). 
+The assessment of bond yields involves dissecting them into two components: a risk-free rate, indicative solely of time preferences, and a risk premium encompassing any macroeconomic factors, such as inflation, exposure to exchange rate fluctuations, and government liquidity constraints (Lo Conte, 2009:344). A nation exhibiting a higher risk profile requires that investors are compensated with a higher yield when purchasing government debt. Therefore, yields are often used as a proxy for the economic risk associated with a nation. At a different extreme, Manganelli & Wolswijk (2009:203) posit that two assets with identical cash flows should exhibit a zero yield spread if they have the same risk-return characteristics. 
 
-In theory, the spread between two assets with identical cash flows should be zero only if the two assets in question have identical risk-return characteristics (Manganelli & Wolswijk, 2009:203). 
+When selecting a benchmark bond, a government security is a common selection (Lo Conte, 2009:341). This paper makes use of US Governments bonds as the relevant benchmark when calculating yield spreads, because many analysts consider these to be the world's *status-quo* store of value (He, Krishnamurthy, & Milbradt, 2016:519). Notably, a consistently high demand for US Treasury Bills has led to low yields historically (He *et al.*, 2016:519). In a fixed benchmark scenario, such as a yield spread analysis, variations in investor risk appetite become discernible over specific dates in the past decade. During risk-averse periods, the price of risky bonds will fall (in line with their value) and their yield will increase. Safer assets will likely see their value rise, and their yield decrease (Lo Conte, 2009:351). Manganelli & Wolswijk (2009:203) describe this time-varying risk aversion as a function of the economic climate, which is a common description in financial risk literature. 
 
-For private and corporate sectors, government securities often represent
-the benchmark to price fixed-income securities, but they are also frequently used for hedging interest rate risk or simply as a risk-free investment
-as collateral. Government securities are the most relevant channel for developing internal financial market (Lo Conte, 2009:341). 
+Unlike the equities market, the appeal of the bond market lies in its role as a secure investment vehicle for institutional portfolios - particularly banks and low-risk funds. For example, a substantial bond allocation is a prominent feature of the "safe asset portfolios" of central banks (He *et al.*, 2016:519). The "safety" of an asset is often subjective and determined by investors. Safety is endogenous; the actions of investors can make a bond more stable than macroeconomic factors indicate (He *et al.*, 2016:523).  Lo Conte (2009:343) contends that the ratio of total government debt to Gross Domestic Product (GDP) is a robust measure of economic risk, significantly influencing EU bond yields, but this idea is not universally consistent. 
 
-US Government bonds are widely considered to be the world's safe store of value (He, Krishnamurthy, & Milbradt, 2016:519). 
-
-Investors share a common but changing risk appetite. They do not need to have a single preference function or a continuously changing one but given certain exogenous conditions, the appetite for risk may fall in two distinct states: risk adverse and risk loving. In the good times (risk loving) investors increase the demand for risky assets the value of which rise significantly; in bad time (risk averse) investors reduce their exposure to risky assets and their value fall. In this process of re-balancing the international
-portfolio in terms of risk and liquidity requirements, investors transfer their
-modified perceptions of risk from one country to another regardless the
-share of common macroeconomic fundamentals giving rise to the phenomenon of contagion commonly observed. This is further strengthened by the
-evidence that investors in emerging markets are common across countries
-and therefore it is natural to expect that a crisis in a country leads to high-
-er yield spreads in the surrounding areas (Lo Conte, 2009:351). 
-
-In the financial risk literature, time-varying risk-aversion is often explained as being a function of the general state of the economy (Manganelli & Wolswijk, 2009:203). 
-
-Often, they are a large component of safe asset portfolios, such as those of a central bank (He, Krishnamurthy, & Milbradt, 2016:519). 
-
-The surge of sovereign bond issues in emerging economies has been impressive. From negligible levels in 1980s ($3.5 billion in 1989), the amount
-of bonds issued by developing countries reached $102 billion in 1996 (Lo Conte, 2009:342). 
-
-The large demands for safe US Treasury bills leads to low yields (He *et al.*, 2016:519).
-
-US Government debt to GDP has risen substantially over the last decade, but bond yields have not been reflective of this additional risk (He *et al.*, 2016:519).
-
-The size of total public debt relative to domestic GDP turns out to be a comprehensive measure of risk. In almost all studies, liquidity and credit risk are found to be significant determinants of EU yield differentials (Lo Conte, 2009:343). 
-
-Liquidity, it is claimed by practitioners, is the main source of the residual segmentation among European government bonds, but the evidence does not fully support this view (Lo Conte, 2009:366). 
-
-The authors claim that the reason for the above is only because investors have nowhere else to go (He *et al.*, 2016:519).
-
-They build a model to demonstrate that the "safety" of an asset is determined by investors; essentially, they argue that safety is endogenous and that investors actions can make an asset safer than some other macroeconomic indicators would suggest (He *et al.*, 2016:523).
-
-Inflation or debt-to-GDP, for example, would not explain fully yield differentials in developing regions bonds. In particular, correct measurement of credit risk needs to quantify the extent to which a developing country is able to meet payments in U.S. dollars either via generation of trade surplus or
-through the use of its foreign currency reserves. (Lo Conte, 2009:343). 
+In the period spanning 2006-2016, US government debt surged, but this trend was not reflected in yields during that time (He et al., 2016:519). He *et al.* (2016:519) argue that, at the time, this was because investors did not feel as confident in the economy of any developed nation as they did about the US economy. The analysis in this paper, which makes use of an updated data set spanning 2010-2023, will argue that investors are beginning to behave in a manner reflective of this additional risk. 
 
 # Descriptive Statistics
 
@@ -123,6 +88,9 @@ knitr::include_graphics("Images/Developing_Bonds_Yields.png",
                          dpi = 300)
 
 ```
+
+The surge of sovereign bond issues in emerging economies has been impressive. From negligible levels in 1980s ($3.5 billion in 1989), the amount
+of bonds issued by developing countries reached $102 billion in 1996 (Lo Conte, 2009:342). 
 
 ```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of BRICS Nations \\label{Figure1.3}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
 
@@ -156,6 +124,9 @@ knitr::include_graphics("Images/Geospatial_1.png",
 
 ```
 
+Inflation or debt-to-GDP, for example, would not explain fully yield differentials in developing regions bonds. In particular, correct measurement of credit risk needs to quantify the extent to which a developing country is able to meet payments in U.S. dollars either via generation of trade surplus or
+through the use of its foreign currency reserves. (Lo Conte, 2009:343). 
+
 ```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Average GDP Growth \\label{Figure3.2}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
 
 knitr::include_graphics("Images/Geospatial_2.png", 
@@ -166,6 +137,8 @@ knitr::include_graphics("Images/Geospatial_2.png",
 # Yield Spreads 
 
 ## Developed Nations
+
+Liquidity, it is claimed by practitioners, is the main source of the residual segmentation among European government bonds, but the evidence does not fully support this view (Lo Conte, 2009:366). 
 
 ```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Developed World Bond Yield Spreads \\label{Figure4.1}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
 
