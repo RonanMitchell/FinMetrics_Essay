@@ -41,7 +41,7 @@ ggplot(data = df) +
           legend.text = element_text(color = "white"),
           plot.margin = margin(0, 0, 0, 0),
           plot.title = element_text(color = "white",
-                                    size = rel(0.8))) +
+                                    size = rel(1.5))) +
 
     labs(title = title)
 

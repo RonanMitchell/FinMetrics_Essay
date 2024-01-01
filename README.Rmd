@@ -277,6 +277,17 @@ Growth_Rates <-
                    
                    Growth) # what to name gathered column
 
+# IMF Debt to GDP: 
+
+Debt_GDP <- 
+    
+    World_Bank_foo(read.csv("data/DebtToGDP.csv"), All_Names, Debt_to_GDP) %>% 
+    
+    mutate(Debt_to_GDP = as.numeric(
+        
+        ifelse(
+        
+        Debt_to_GDP == "no data", NA, Debt_to_GDP)))
 
 # world bank CPI measure, I have only downloaded since 2010. 
 
@@ -487,13 +498,14 @@ Ridge_Plotter(Bonds10yr,
 
 With geo-spatial plotting, the general issue that most would have is to get the data into the correct format. It must be an *sf* object, but you can download these from the geo-spatial packages in my package selection from earlier. Inspect the Map_Data_foo() carefully, it simply takes the necessary steps in a repeatable process to merge the data sets in this case to the format required. The biggest problem is usually that different data sets use different naming conventions for country titles. This is not an automatable process, and will always require manual fixing, depending on your data set. At least the *sf* data sets themselves have very intuitive naming conventions. 
 
-```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
+```{r warning = FALSE}
 
 source("code/Map_Data_foo.R")
 
 M1 <- Map_Data_foo(Bonds2yr, BondYield_2)
 M2 <- Map_Data_foo(CPI, Inflation)
 M3 <- Map_Data_foo(Growth_Rates, Growth)
+M4 <- Map_Data_foo(Debt_GDP, Debt_to_GDP)
 
 ```
 
@@ -507,25 +519,19 @@ source("code/Create_Map_foo.R")
 
 ###
 
-grid.arrange(
+create_map(M1, "Average Bond Yield (2-Year)", "none")
 
-create_map(M1, "Average Bond Yield (2-Year)", "none"),
-
-create_map(M2, "Average Inflation", "none"),
-
-ncol = 1)
-
-```
-
-```{r warning = FALSE, dpi=300, out.height= "100%", out.width= "100%"}
+create_map(M4, "Average Debt-to-GDP Ratio", "none")
 
 create_map(M3, "Average GDP Growth", "none")
+
+create_map(M2, "Average Inflation", "none")
 
 ```
 
 ```{r}
 
-rm(list = c("M1", "M2", "M3"))
+rm(list = c("M1", "M2", "M3", "M4"))
 
 ```
 
