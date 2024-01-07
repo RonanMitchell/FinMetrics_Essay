@@ -1,5 +1,5 @@
 ---
-title: "The South African Reality: A Risk Analysis of Yield Spreads"
+title: "Government Bond Yield Spreads as a Measure of Financial Risk"
 documentclass: elsarticle
 Thesis_FP: no
 output:
@@ -37,84 +37,94 @@ rm(list = ls())
 
 gc()
 
+###
+
 library(knitr)
 
 ```
 # Introduction 
 
+Viewing economic risk through the lens of the Yield to Maturity (YTM) of government bonds is a common approach in the financial risk literature. YTM serves as a simple proxy for understanding macro-economic risk. The discussion in this paper employs a geo-spatial analysis of macro-economic factors, yield distributions, and yields over time. These descriptive statistics contextualize the analysis of yield spreads at a later juncture. Notably, the geo-spatial analysis reveals  that no single macro-economic factor predicts yields perfectly.
+
+The examination of yields over time and yield distributions allows for a discussion about the susceptibility of nations to economic tail events. The yields over time are evaluated alongside the Volatility Index (VIX), inflation, and exchange rate volatility. Government bonds in the developed world exhibit significant yield similarity, which is a contrast to the erratic trends observed in the yields of BRICS nations and the developing world.
+
+When assessing yield spreads using the US government benchmark bond, a departure from historical norms is evident. The United States emerges as a riskier investment, falling behind Germany and Japan in risk profile. Furthermore, an alarming trend in South Africa is observed. The nation exhibits a heightened risk profile since 2010, even surpassing BRICS counterparts such as China, and more notably, India. 
+
 # Literature Review 
 
 ## The Calculation of Bond Yield
 
-The assessment of bond profitability differs markedly from the evaluation of equities and other risky assets. Financial analysts often use the term "yield" in order to contextualize bond performance. This can take various forms; Current Yield, Yield-to-Call, Yield-to-Worst, and Yield-to-Maturity (YTM). The widely adopted practice in finance involves employing YTM to calculate yield spreads, as is the case in this paper. In Lawrence & Shankar (2007:92), the relationship between a bond price and YTM is calculated as: 
+The assessment of bonds as worthwhile assets differs from the evaluation of risky assets. Financial analysts often use the term "yield" in order to contextualize bond performance. This can take various forms; Current Yield, Yield-to-Call, Yield-to-Worst, and Yield-to-Maturity. The widely adopted practice in finance involves employing YTM to calculate yield spreads, as is the case in this paper. In Lawrence & Shankar (2007:92), the relationship between a bond price and YTM is calculated as: 
 
 \[ P = \frac{C}{(1+i)} + \frac{C}{(1+i)^2} + \ldots + \frac{M}{(1+i)^n} \]
 
-In the above equation, *P* is the price of the given bond, *C* is the coupon rate, *M* is the principal payment, and *i* - which can be inferred - is the YTM. From this, it can be concluded that, *ceteris paribus*, there is an inverse relationship between the price of a bond and the YTM. A core assumption of this formula is that the bond buyer will hold until maturity and reinvest each interest payment at the same rate. It is simply an estimate of what one should earn from purchasing a bond. The YTM is often approximated as:
+In the above equation, *P* is the price of a bond, *C* is the coupon rate, *M* is the principal payment, and *i* - which can be inferred - is the YTM. From this, it can be concluded that there is an inverse relationship between the price of a bond and the YTM, *ceteris paribus*. An assumption of this formula is that the bond buyer will hold until maturity and reinvest each interest payment at the same rate. It is an estimate of what one should earn from purchasing a bond. The YTM is often approximated as:
 
 \[ YTM \approx \frac{C + \frac{FV - PV}{n}}{\frac{FV + PV}{2}} \]
 
-In this case, the *FV* is the face value of the security and the *PV* would be the present value or price of the security. This equation once again demonstrates the inverse relationship between the price and yield of a bond. This relationship is a useful tool for understanding why bond yields are a good indicator of implied risk in the economy, and this is elaborated on in the subsequent section. The calculated yield is often used to differentiate between the risk profiles of two or more bonds. 
+In this case, the *FV* is the face value of the bond and the *PV* would be the present value or price. This equation once again demonstrates the inverse relationship between the price (value) and yield of a bond. This relationship is a useful tool for understanding why bond yields are a good indicator of implied risk in the economy, and this is elaborated on in the subsequent section. The calculated yield is often used to differentiate between the risk profiles of two, or more, government bonds. 
 
 ## The Economic Implications of Bond Yields
 
-The assessment of bond yields involves dissecting them into two components: a risk-free rate, indicative solely of time preferences, and a risk premium encompassing any macroeconomic factors, such as inflation, exposure to exchange rate fluctuations, and government liquidity constraints (Lo Conte, 2009:344). A nation exhibiting a higher risk profile requires that investors are compensated with a higher yield when purchasing government debt. Therefore, yields are often used as a proxy for the economic risk associated with a nation. At a different extreme, Manganelli & Wolswijk (2009:203) posit that two assets with identical cash flows should exhibit a zero yield spread if they have the same risk-return characteristics. 
+The evaluation of bond yields involves dissecting them into two components: a risk-free rate, indicative solely of time preferences, and a risk premium encompassing any macro-economic factors, such as inflation, exchange rate fluctuations, or liquidity constraints (Lo Conte, 2009:344). A nation exhibiting a higher risk profile requires that investors are compensated with a higher yield when purchasing government debt. Therefore, yields are often used as a proxy for the economic risk associated with a country. In fact, Manganelli & Wolswijk (2009:203) posit that two assets with identical cash flows should exhibit a zero yield spread if they have the same risk-return characteristics. 
 
-When selecting a benchmark bond, a government security is a common selection (Lo Conte, 2009:341). This paper makes use of US Governments bonds as the relevant benchmark when calculating yield spreads. Many analysts consider these to be the world's *status-quo* store of value (He, Krishnamurthy, & Milbradt, 2016:519). Notably, a consistently high demand for US Treasury Bills has led to low yields historically (He *et al.*, 2016:519). In a fixed benchmark scenario, such as a yield spread analysis, variations in investor risk appetite become discernible over specific dates in the past decade. During risk-averse periods, the price of higher risk bonds will fall (in line with their value) and the yield will increase. Safer assets will likely see their value rise, and their yield decrease (Lo Conte, 2009:351). Manganelli & Wolswijk (2009:203) describe this time-varying risk aversion as a function of the economic climate, which is a common description in financial risk literature. 
+When selecting a benchmark bond, a government security is a common selection (Lo Conte, 2009:341). This paper makes use of US Governments bonds as the relevant benchmark when calculating yield spreads. Many analysts consider US government bonds to be the world's *status-quo* store of value (He, Krishnamurthy, & Milbradt, 2016:519). Notably, a consistently high demand for US Treasury Bills has led to low yields historically (He *et al.*, 2016:519). 
 
-As discussed in the previous section, the value, and therefore the price, of a bond is inversely related to the yield. Unlike the equities market, the appeal of the bond market lies in its role as a secure investment vehicle for institutional portfolios - particularly banks and low-risk funds. For example, a substantial bond allocation would be a prominent feature of the "safe asset portfolios" of central banks (He *et al.*, 2016:519). This is why a high-yield-bond is not as desired as a high-return-stock. 
+In a fixed benchmark scenario, such as a yield spread analysis, variations in investor risk appetite become obvious. During risk-averse periods, the price of higher risk bonds will fall (in line with their value) and the yield will increase. Safer assets will likely see their value rise, and their yield decrease (Lo Conte, 2009:351). Manganelli & Wolswijk (2009:203) describe this time-varying risk aversion as a function of the economic climate, which is a common description in financial risk literature. 
 
-The "safety" of an asset is often subjective and determined by investors. Safety is endogenous; the actions of investors can make a bond more stable than macroeconomic factors indicate (He *et al.*, 2016:523).  Lo Conte (2009:343) contends that the ratio of total government debt to Gross Domestic Product (GDP) is a robust measure of economic risk, significantly influencing EU bond yields, but this idea is not universally consistent. 
+As discussed in the previous section, the price of a bond is inversely related to the yield. Unlike the equities market, the appeal of the bond market lies in its role as a secure investment vehicle for institutional portfolios - particularly banks and low-risk funds. For example, a substantial bond allocation would be a prominent feature of the "safe asset portfolios" of central banks (He *et al.*, 2016:519). This is why a high-yield-bond is not as desired as a high-return-stock. 
+
+The "safety" of an asset is often subjective and determined by investors. Safety is endogenous; the actions of investors can make a bond more stable than macro-economic factors indicate (He *et al.*, 2016:523). Lo Conte (2009:343) contends that the ratio of total government debt to Gross Domestic Product (GDP) is a robust measure of economic risk, significantly influencing EU bond yields, but this idea is not universally consistent. 
 
 In the period spanning 2006-2016, US government debt surged, but this trend was not reflected in yields during that time (He et al., 2016:519). He *et al.* (2016:519) argue that, at the time, this was because investors did not feel as confident in the economic outlook for any developed nation as they did about the US. The analysis in this paper, which makes use of an updated data set spanning 2010-2023, will argue that investors are beginning to behave in a manner reflective of this additional risk. 
 
 # Descriptive Statistics
 
-This section is dedicated to discussing the interplay between bond yields and macro-economic indicators. In the landscape of economic indicators, particular attention is paid towards inflation, exchange rate volatility (specifically, US-EU dynamics), the Volatility Index (VIX), GDP Growth, and Debt to GDP ratios. The juxtaposition of bond yields with these indicators will explain the decisions made in the subsequent spread analysis, such as why the United States is the benchmark bond.
+This section is dedicated to discussing the interplay between bond yields and macro-economic indicators. In particular, attention is paid towards inflation, exchange rate volatility (specifically US-EU dynamics), the VIX, GDP Growth, and Debt to GDP ratios. The juxtaposition of bond yields with these indicators will explain the decisions made in the subsequent spread analysis, such as why the United States is the benchmark bond.
 
-Commencing the descriptive analysis is a discussion on the significance of inflation, growth, and debt ratios as economic indicators correlated with 2-year bond yields. This discussion is facilitated by employing geo-spatial plots, which exhibit the average rate of each indicator for individual countries since 2010. While the use of decade-long averages provides a simplified perspective, one must acknowledge the time dynamics associated with these indicators. Consequently, a more granular examination is merited.
+Commencing the descriptive analysis is a discussion on the significance of inflation, growth, and debt ratios as economic indicators correlated with 2-year bond yields. This discussion is facilitated by employing geo-spatial plots, which exhibit the average rate of each indicator for individual countries since 2010. While the use of decade-long averages provides an intuitive perspective, one must acknowledge the time dynamics associated with macro-economic indicators. Consequently, a more detailed examination is merited.
 
-This temporal element is addressed by graphically representing bond yields for developing countries, developed nations, and BRICS (Brazil, Russia, India, China, South Africa) countries since 2010. Accompanying these graphics are corresponding inflation trends during the same period. These plots include  blue regions denoting periods of high VIX, and red zones signifying increased US-EU exchange rate volatility. The choice of 2-year bond yields is crucial, as their shorter time to maturity means they are more sensitive to fluctuations in economic conditions.
+This temporal element is addressed by graphically representing bond yields for developing countries, developed nations, and BRICS (Brazil, Russia, India, China, South Africa) since 2010. Accompanying these graphics is the corresponding inflation trend for each nation during the same period. These plots include blue regions denoting periods of high VIX, and red zones signifying increased US-EU exchange rate volatility. The choice of 2-year bond yields is crucial, as their shorter time to maturity means they are sensitive to fluctuations in economic conditions.
 
-Concluding the descriptive analysis, attention is directed towards the distribution of bond yields for each developed country and each BRICS nation. Analyzing these distributions is important for determining the susceptibility of different groups of nations to economic tail events, which sheds light on the resilience of economies against shocks.
+Concluding the descriptive analysis, attention is directed towards the distribution of bond yields for each developed country and each BRICS nation. Analyzing these distributions is important for determining the susceptibility of different nations to economic tail events. This sheds light on the resilience of economies against shocks.
 
 ## Geo-Spatial Analysis 
 
-Yield differentials, especially in developing nations, cannot be entirely explained by discussing debt ratios or inflation rates. According to Lo Conte (2009:343), financial experts must consider the ability of a nation to meet debt obligations in U.S. dollars. This can occur through generating a trade surplus, or using foreign currency reserves. The geo-spatial analysis in this section emphasizes that no single macroeconomic factor perfectly determines bond yields.
+Yield differentials, especially in developing nations, cannot be entirely explained by discussing debt ratios or inflation rates. According to Lo Conte (2009:343), financial experts must consider the ability of a nation to meet debt obligations in U.S. dollars. This can occur through generating a trade surplus, or using foreign currency reserves. The geo-spatial analysis in this section emphasizes that no single macro-economic factor perfectly determines bond yields.
 
-In Figure 3.1, each country in the dataset is assigned a color to exhibit its ranking in a specific macroeconomic factor compared to other countries. For example, Venezuela consistently has the highest average bond yield since 2010, while Germany and Japan tend to have some of the lowest. Notably, Russia has a very low average debt ratio, but its bond yield has been among the highest. This seems less connected to traditional macroeconomic factors and more likely linked to geopolitical risk.
+In Figure 3.1, each country in the data set is assigned a color to exhibit its ranking in a specific macro-economic factor compared to other countries. For example, Venezuela consistently has the highest average bond yield since 2010, while Germany and Japan tend to have some of the lowest. Notably, Russia has a very low average debt ratio, but its bond yield has been among the highest. This seems less connected to traditional macro-economic factors and more likely linked to geopolitical risk.
 ```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Average Macro-economic Indicators \\label{Figure3.1}", fig.ext = 'png', out.height = "55%", out.width = "100%"}
 
 knitr::include_graphics("Images/Full_Geo.png", 
                          dpi = 300)
 
 ```
-From these maps, one can posit that inflation holds significance for investors assessing government bond risk, given the observed similarity between high average inflation and high average bond yields. Although not universally applicable, this trend manifests in numerous cases. In contrast, the debt ratio appears disconnected from bond yields, as illustrated by Japan having the world's highest debt ratio but the lowest bond yield, and Nigeria possessing a similarly low debt ratio yet ranking among the nations with the highest average bond yields globally.
+From these maps, one can argue that inflation indeed holds significance for investors assessing government bond risk, given the similarity between high average inflation and high average bond yields. Although not universally applicable, this trend manifests in numerous cases. In contrast, the debt ratio appears disconnected from bond yields. Japan has the world's highest debt ratio but the lowest bond yield, and Nigeria has a low debt ratio yet it ranks among the nations with the highest average bond yields.
 
-This finding is counter intuitive, but it can be attributed to the plots presenting all macroeconomic factors *in levels*. It is likely that if a nation unexpectedly accumulates more debt than anticipated by investors, this might adversely impact the risk level of the country. Additionally, there is likely a selection bias associated with this variable; countries perceived as more reliable accumulate more debt and higher ratios, given the expectation of debt repayment. In contrast, riskier countries may not be afforded the opportunity to accumulate substantial debt.
+This finding can be attributed to the plots presenting all macro-economic factors *in levels*. It is likely that if a nation unexpectedly and rapidly accumulates more debt than anticipated by investors, this would adversely impact the perceived risk profile of the country. Additionally, there is likely a selection bias associated with this variable; countries perceived as more reliable accumulate more debt and higher debt ratios, given the expectation of repayment. In contrast, riskier countries may not be afforded the opportunity to accumulate substantial debt.
 
-Furthermore, average GDP growth is an inadequate predictor of bond yields. South Africa exhibits notably low economic growth relative to other countries in the dataset. It also exhibits a high bond yield. If this were a determining factor, one would anticipate high bond yields from Germany, France, and the UK. However, these countries consistently exhibit some of the lowest bond yields globally, despite low growth rates. 
+Furthermore, average GDP growth is an inadequate predictor of bond yields. South Africa exhibits notably low economic growth relative to other countries in the data set. It also exhibits a high bond yield. If this were a determining factor, one would anticipate high bond yields from Germany, France, and the UK. However, these countries consistently exhibit some of the lowest bond yields globally, despite low growth rates. 
 
 ## Bond Yields 
 
-In the period spanning from 1999 to the onset of the global financial crisis (GFC), there was a convergence in yield differentials among European Union (EU) member states. This was largely attributable to the the implementation of a common currency (Lo Conte, 2009:342). Consequently, the eradication of exchange rate risk left only credit and liquidity risk as determinants of yield differentials. Figure 3.2 displays the modern trend; there is still a similarity in the differentials between the bond yields of all developed nations in the data set, including EU nations. This trend contrasts with the erratic differentials observed among developing nations, as displayed in Figure 3.3. 
+In the period spanning 1999 to the onset of the global financial crisis (GFC), there was a convergence in yield differentials among European Union (EU) states. This was largely attributable to the the implementation of a common currency (Lo Conte, 2009:342). Consequently, the eradication of exchange rate risk left only credit and liquidity risk as determinants of yield differentials. Figure 3.2 displays the modern trend; there is still a similarity in the differentials between the bond yields of all developed nations in the data set, including EU nations. This trend contrasts with the erratic differentials observed among developing nations, as displayed in Figure 3.3. 
 
-Developed nations continue to exhibit similar trends during periods of crisis, including the 2013 episode of substantial exchange rate volatility, as well as elevated VIX levels observed in 2020. Additionally, a homogeneous escalation in bond yields is observed during the alarming inflation witnessed in 2021. A notable observation pertaining to the risk of developing nations as a broad group is the confined range of these bond yields, which consistently fluctuate between being slightly negative values, and 4%. This stands in contrast to the varied patterns observed with the yields of developing nations. Furthermore, there exists a co-movement between bond yields and inflation in the developed world. This co-movement emphasizes the diminished effect of other economic risk factors on bond yields in developed economies.
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of Developed Nations \\label{Figure3.2}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
+Developed nations exhibit similar trends during periods of crisis, including the 2013 episode of substantial exchange rate volatility, as well as elevated VIX observed in 2020. Additionally, a homogeneous escalation in bond yields is observed during the alarming inflation witnessed in 2021. A notable observation pertaining to the risk level of developed nations as a broad group is the confined range of these bond yields. The range consistently sits between being slightly negative, and 4%. This stands in contrast to the varied levels observed in the yields of developing nations. Furthermore, there exists a co-movement between bond yields and inflation in the developed world. This co-movement emphasizes the diminished effect of other economic risk factors on bond yields in developed economies.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of Developed Nations \\label{Figure3.2}", fig.ext = 'png', out.height = "55%", out.width = "90%"}
 
 knitr::include_graphics("Images/Developed_Bond_Yields.png", 
                          dpi = 300)
 
 ```
-In the 1980s, emerging economies had a low presence in the market for the issuance of debt (3.5 billion dollars in 1989). However, this changed rapidly, with the levels of debt issued reaching 102 billion dollars by 1996 (Lo Conte, 2009:342).As seen in Figure 3.3., the trend of debt issuance by developing countries has persisted to 2023. The figure lacks the bond yields of Venezuela and Mexico. The exclusion of these nations is due to decisions by the respective governments that were perceived adversely by investors. This means that the short-term bond yields of Venezuela and Mexico require a unique scale to visualize, because of the considerable impact of the unfavorable investor sentiments resulting from these decisions.
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of Developing Nations \\label{Figure3.3}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
+In the 1980s, emerging economies had a low presence in the market for the issuance of debt (3.5 billion dollars in 1989). However, this changed rapidly, with the levels of debt issued by developing nations reaching 102 billion dollars by 1996 (Lo Conte, 2009:342). Figure 3.3 lacks the bond yields of Venezuela and Mexico. The exclusion of these nations is due to decisions by the respective governments that were perceived negatively by investors. This means that the short-term bond yields of Venezuela and Mexico require a unique scale to visualize, due to the considerable impact of the unfavorable investor sentiment resulting from these actions.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of Developing Nations \\label{Figure3.3}", fig.ext = 'png', out.height = "55%", out.width = "90%"}
 
 knitr::include_graphics("Images/Developing_Bonds_Yields.png", 
                          dpi = 300)
 
 ```
-Certain developing nations do exhibit relatively low yields, such as Bulgaria, where the 2-year bond yield has been negative since 2016. Although classified as an upper-middle-income country by the World Bank (World Bank, 2022), Bulgaria has a financial history reflecting a commitment to meeting debt obligations. Russia, alongside most members of the BRICS consortium, shares the classification of upper-middle-income according to the World Bank (World Bank, 2022). However, Russia's bond yields diverge significantly from that of Bulgaria. This is unsurprising given Russia's involvement in two international conflicts within the past decade.
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of BRICS Nations \\label{Figure3.4}", fig.ext = 'png', out.height = "53%", out.width = "80%"}
+Certain developing nations do exhibit relatively low yields, such as Bulgaria, where the 2-year bond yield has been negative since 2016. Although classified as an upper-middle-income country by the World Bank (World Bank, 2022), Bulgaria has a financial history reflecting a commitment to meeting debt obligations. Russia, alongside most members of the BRICS consortium, shares the classification of "upper-middle-income", according to the World Bank (World Bank, 2022). However, Russia's bond yields diverge significantly from that of Bulgaria. This is unsurprising given Russia's involvement in two international conflicts within the past decade.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yields of BRICS Nations \\label{Figure3.4}", fig.ext = 'png', out.height = "55%", out.width = "90%"}
 
 knitr::include_graphics("Images/BRICS_Bonds_Yields.png", 
                          dpi = 300)
@@ -124,59 +134,60 @@ BRICS nations presently lack uniformity in bond yields. Furthermore, the bond yi
 
 ## Yield Distributions 
 
-here, argue why the US is the de facto benchmark. 
+In Figure 3.5, the credibility of the US government bond as a benchmark becomes evident. The yields associated with this have symmetrical distribution, and an insensitivity to tail events. However, the US government bond is not the least risky among those offered by developed nations. The figure suggests that this title should be attributed to bonds issued by Japan or Germany. Japan is notorious for often struggling with deflation rather than inflation, so their yields always remain below the average yield of the US alternative, represented by the grey dotted line.
 
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yield Distributions of Developed Nations \\label{Figure3.5}", out.height = "50%", out.width = "90%"}
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yield Distributions of Developed Nations \\label{Figure3.5}", out.height = "50%", out.width = "100%"}
 
 knitr::include_graphics("Images/Developed_Distributions.png", 
                          dpi = 300)
 
 ```
+South African bonds are relatively high-risk instruments, even when juxtaposed against the alternatives within BRICS. This is evident in Figure 3.6, where the distribution of the government bond yields of Brazil, Russia, India, and China all largely reside to the left of the average South African bond yield (the dotted line). Russia maintains susceptibility to tail events. Moreover, the bimodal distribution observed in Indian bond yields suggests a potential rapid shift from one average yield to another, possibly reflecting a trend toward a lower average yield since 2010.
 
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yield Distributions of BRICS Nations \\label{Figure3.6}", fig.ext = 'png', out.height = "50%", out.width = "90%"}
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Bond Yield Distributions of BRICS Nations \\label{Figure3.6}", fig.ext = 'png', out.height = "50%", out.width = "100%"}
 
 knitr::include_graphics("Images/BRICS_Distributions.png", 
                          dpi = 300)
 
 ```
-
 # Yield Spreads 
+
+This section examines both 2-year and 10-year yield spreads. This decision is guided by the fact that 2-year yields are more responsive to short-term economic fluctuations, while 10-year spreads reflect changes in investors' long-term economic sentiments, *ceteris paribus*. Yields are influenced by various factors strictly beyond the economic outlook of a nation, although I argue that inflation, interest rates, debt, and other macro-economic factors are often indicative of the underlying economic strength of a country.
 
 ## Developed Nations
 
-Liquidity, it is claimed by practitioners, is the main source of the residual segmentation among European government bonds, but the evidence does not fully support this view (Lo Conte, 2009:366). 
-
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Developed World Bond Yield Spreads \\label{Figure4.1}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
+Figure 4.1 illustrates that over time, the United States (the benchmark bond at zero) has evolved into a comparatively risky investment within the context of the developed world. Between 2015 and 2020, all developed nations exhibited lower short-term bond yields than the United States, coinciding with the latter period of the presidency of Donald Trump. In terms of long-term sentiment, there appears to be a sustained perception among investors that the economic outlook of the United States is not optimistic. Despite exhibiting less volatility, the 10-year spread still signifies a prolonged trend towards the United States government bond being considered a relatively risky asset compared to developed world alternatives.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "Developed World Bond Yield Spreads \\label{Figure4.1}", fig.ext = 'png', out.height = "55%", out.width = "90%"}
 
 knitr::include_graphics("Images/Developed_Spreads.png", 
                          dpi = 300)
 
 ```
-
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "South Africa vs Germany Yield Spread \\label{Figure4.2}", fig.ext = 'png', out.height = "45%", out.width = "80%"}
+The US government bond continues to exhibit lower risk when juxtaposed with a developing nation like South Africa. In Figure 4.2, three distinct yield spreads are depicted, maintaining the US as the reference point of zero, alongside Germany and South Africa. Notably, these two nations have undergone divergent risk profile trajectories over the past decade. Germany has evolved to be consistently safer than the United States, while South Africa has experienced a persistent increase in perceived risk level. At the onset of the decade, the spread between the two nations (relative to the US benchmark) stood only at 5%, but this has since doubled.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "South Africa vs Germany Yield Spread \\label{Figure4.2}", fig.ext = 'png', out.height = "47%", out.width = "90%"}
 
 knitr::include_graphics("Images/SA-Germany.png", 
                          dpi = 300)
 
 ```
-
 ## BRICS Nations 
 
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "BRICS Bond Yield Spreads \\label{Figure4.3}", fig.ext = 'png', out.height = "50%", out.width = "80%"}
+Short-term investor perspectives on BRICS nations have generally exhibited stability, with exceptions during the two instances of violent conflict between Russia and the Ukraine, leading to a notable surge in short-term yields for Russian government bonds. Conversely, the long-term outlook appears more disconcerting for South Africa. Since receiving a "junk" bond rating in 2017, the long-term yield has displayed gradual increases, even when compared to other geopolitical "anchor states" within BRICS. Although the current Russian government bond yield surpasses that of South Africa, the five-year trend preceding COVID-19 implies a lack of investor confidence in the ability of the South African economy to recover to pre-GFC levels of economic growth.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "BRICS Bond Yield Spreads \\label{Figure4.3}", fig.ext = 'png', out.height = "55%", out.width = "90%"}
 
 knitr::include_graphics("Images/BRICS_Spreads.png", 
                          dpi = 300)
 
 ```
-
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "SA vs China Yield Spread \\label{Figure4.4}", fig.ext = 'png', out.height = "45%", out.width = "80%"}
+Refer to Figure 4.4 for a visual comparison between specific BRICS nations. China, while still perceived as riskier than the United States, has demonstrated a noteworthy degree of stability concerning its yield in comparison to the US government bond. Despite a marginal surge in the Chinese yield relative to the US yield during the pandemic, it promptly reverted to its customary level. In contrast, the trajectory of the South African government bond continues to diverge; the spike in the South African 10-year bond yield during COVID-19 was notably more pronounced than its Chinese counterpart. Moreover, over the decade, the 10-year bond yields of the two nations have consistently drifted apart.
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "SA vs China Yield Spread \\label{Figure4.4}", fig.ext = 'png', out.height = "47%", out.width = "90%"}
 
 knitr::include_graphics("Images/SA-China.png", 
                          dpi = 300)
 
 ```
-
-```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "SA vs India Yield Spread \\label{Figure4.5}", fig.ext = 'png', out.height = "45%", out.width = "80%"}
+Perhaps the most informative depiction of waning confidence in the South African risk profile is evident in Figure 4.5. India and South Africa are often regarded as examples of countries with growth potential stifled by being caught in a "middle income trap" or grappling with corruption (Transparency International, 2023). In the initial years of the decade, the yields of both nations, relative to the US, were comparable and frequently intersected. However, since 2015, South Africa has consistently been perceived as a riskier country than India. This trend is concerning, particularly considering that 10-year yields serve as indicators of longer-term economic prospects. Investors have a lack of confidence in the longer run South African economic outlook, even in comparison to a nation that was previously regarded as having a similar risk profile. 
+```{r echo = FALSE, warning = FALSE, fig.align = 'center', fig.cap = "SA vs India Yield Spread \\label{Figure4.5}", fig.ext = 'png', out.height = "47%", out.width = "90%"}
 
 knitr::include_graphics("Images/SA-India.png", 
                          dpi = 300)
@@ -184,6 +195,10 @@ knitr::include_graphics("Images/SA-India.png",
 ```
 
 # Conclusion 
+
+Since 2010, the trajectory of United States government bond yields challenges its historical status as the least risky investment globally. Developed nations like Japan and Germany, as well as some developing ones like Bulgaria, exhibit lower risk with negative yield spreads. While the US remains less risky than most developing nations, certain government bonds, like that of China, are maintaining or even narrowing their yield spread relative to the US over time.
+
+South Africa, despite the increased relative yield of US government bonds, has consistently increased its own government bond yield spread relative to the US. Over the last few years it holds the position of the riskiest among BRICS government bonds. This sustained trend highlights South Africa's precarious investment status, necessitating substantial reforms to address negative investor sentiments and improve economic prospects.
 
 \newpage 
 
@@ -195,6 +210,8 @@ Central Government Debt [Online]. [n.d.]. Available: https://www.imf.org/externa
 
 Consumer Price Index (2010 = 100) [Online]. [n.d.]. Available: https://data.worldbank.org/indicator/FP.CPI.TOTL?end=2022&start=2010&view=chart
 [2023, December 10]. 
+
+Corruption Perceptions Index [Online]. [n.d.]. Available: https://www.transparency.org/en/cpi/2022 [2024, January 7]. 
 
 He, Z., Krishnamurthy, A., & Milbradt, K. 2016. What Makes US Government Bonds Safe Assets? *The American Economic Review*, 106(5):519-523. 
 

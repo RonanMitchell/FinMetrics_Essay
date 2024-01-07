@@ -13,28 +13,23 @@ output that was constructed for this assignment. This is not the final
 research assignment, which will be found in a PDF document made using
 Texevier (<https://github.com/Nicktz/Texevier>) and will be named
 “Essay_PDF” inline with the separate Rmd file constructed for that
-purpose.
+purpose. The order of the graphs in this README will not always match
+the order of graphs in the final essay, as this README is a
+representation of the order in which the ideas came to me, and how they
+flowed. The essay is a structured academic piece.
 
 # Interpretation of the Question
 
-I have decided to focus on a comparison between South African bond yield
-spreads and those of other similar and dissimilar countries. I begin
-with descriptive data analysis, such as simply plotting the bond yields
-of various regions or groups of countries. I contextualize these yields
-by indicating high volatility times for the US-Euro exchange rate, and
-above average VIX level periods. I also compare the distribution of
-yields for each country through the use of ridge lines. Finally, a
-visually intuitive tool - geospatial analysis - is used to convey they
-risk level of different countries, which includes plotting their average
-bond yield over the past decade, average inflation over the past decade,
-and average GDP growth.
-
-Once the descriptive analysis is completed, I calculate the yield
-spreads of all countries, with the US as the benchmark bond. In the full
-essay, this is where the bulk of the analysis will occur, but the
-descriptive analysis is useful for anyone (including myself) that is
-curious about what is loosely correlated with risk, measured as bond
-yields.
+As I plotted the yields over time, yield distributions, and geo-spatial
+analysis, I noticed two interesting trends which were later confirmed by
+the yield spread analysis. Firstly, the United States government is no
+longer the safest asset in developed world, and at times, it has
+actually been the riskiest asset on the developed bonds market.
+Secondly, South Africa has become perceived as incredibly risky since
+2015 (likely related to becoming junk status), even compared to BRICS
+counterparts like China and India. In fact, as the United States has
+become riskier, South Africa has become even more risky relative to the
+United States. I decided to focus on these trends.
 
 # Required Packages:
 
@@ -281,14 +276,15 @@ Developing_vec <-
 
 ## Non-perscribed Data
 
-Below I download CPI and GDP Growth data from the World Bank. This is so
-that I am able to either use CPI, inflation, or GDP measures from a
-reputable source to contextualize bond yields. Inflation is one of the
-only pure economic risks that can face a bond - in good times - and as
-such I think it is worth including in the analysis. I created a function
-to import the data from the World Bank as it is always in the same,
-messy and unclean format. So World_Bank_foo() gets it into the format I
-want. This was useful as I downloaded many data sets.
+Below I download CPI, GDP Growth and debt to GDP data from the World
+Bank. This is so that I am able to either use debt ratios, inflation, or
+GDP measures from a reputable source to contextualize bond yields.
+Inflation is one of the only pure economic risks that can face a bond -
+in good times - and as such I think it is worth including in the
+analysis. I created a function to import the data from the World Bank as
+it is always in the same, messy and unclean format. So World_Bank_foo()
+gets it into the format I want. This was useful as I downloaded many
+data sets.
 
 I have also downloaded VIX and US-EU exchange rate data from FRED. With
 this VIX and US exchange rate data, I will not really be plotting them
@@ -316,6 +312,17 @@ Growth_Rates <-
                    
                    Growth) # what to name gathered column
 
+# IMF Debt to GDP: 
+
+Debt_GDP <- 
+    
+    World_Bank_foo(read.csv("data/DebtToGDP.csv"), All_Names, Debt_to_GDP) %>% 
+    
+    mutate(Debt_to_GDP = as.numeric(
+        
+        ifelse(
+        
+        Debt_to_GDP == "no data", NA, Debt_to_GDP)))
 
 # world bank CPI measure, I have only downloaded since 2010. 
 
@@ -342,10 +349,11 @@ CPI <-
 
 In the following chunk you will notice High_Vol_foo(). This function
 calculates high volatility periods in a variable, either by standard
-deviation or mean, and selects whatever quantile() is specified. You can
-specify the data set, variable, quantile, and method (either above mean
-or above standard deviation). The last part is achieved with an if/else
-function within the function.
+deviation (exchange rate) or mean (for the VIX, as a high VIX is already
+indicative of volatility), and selects whatever quantile() is specified.
+You can specify the data set, variable, quantile, and method (either
+above mean or standard deviation). The last part is achieved with an
+if/else function within the function.
 
 ``` r
 ###
@@ -559,6 +567,7 @@ source("code/Map_Data_foo.R")
 M1 <- Map_Data_foo(Bonds2yr, BondYield_2)
 M2 <- Map_Data_foo(CPI, Inflation)
 M3 <- Map_Data_foo(Growth_Rates, Growth)
+M4 <- Map_Data_foo(Debt_GDP, Debt_to_GDP)
 ```
 
 Once the data is in the correct format, plotting simply requires ggplot.
@@ -577,25 +586,31 @@ source("code/Create_Map_foo.R")
 
 ###
 
-grid.arrange(
-
-create_map(M1, "Average Bond Yield (2-Year)", "none"),
-
-create_map(M2, "Average Inflation", "none"),
-
-ncol = 1)
+create_map(M1, "Average Bond Yield (2-Year)", "none")
 ```
 
 <img src="README_files/figure-gfm/unnamed-chunk-15-1.png" width="100%" height="100%" />
 
 ``` r
-create_map(M3, "Average GDP Growth", "none")
+create_map(M2, "Average Inflation", "none")
 ```
 
 <img src="README_files/figure-gfm/unnamed-chunk-16-1.png" width="100%" height="100%" />
 
 ``` r
-rm(list = c("M1", "M2", "M3"))
+create_map(M3, "Average GDP Growth", "none")
+```
+
+<img src="README_files/figure-gfm/unnamed-chunk-17-1.png" width="100%" height="100%" />
+
+``` r
+create_map(M4, "Average Debt-to-GDP Ratio", "none")
+```
+
+<img src="README_files/figure-gfm/unnamed-chunk-18-1.png" width="100%" height="100%" />
+
+``` r
+rm(list = c("M1", "M2", "M3", "M4"))
 ```
 
 # Yield Spreads
@@ -639,7 +654,7 @@ grid.arrange(
    heights = c(1.5,2))
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-18-1.png" width="100%" height="100%" />
+<img src="README_files/figure-gfm/unnamed-chunk-20-1.png" width="100%" height="100%" />
 
 ``` r
 grid.arrange(
@@ -665,7 +680,7 @@ grid.arrange(
    heights = c(1.5,2))
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-19-1.png" width="100%" height="100%" />
+<img src="README_files/figure-gfm/unnamed-chunk-21-1.png" width="100%" height="100%" />
 
 ## Unique Pair Comparisons
 
@@ -690,7 +705,7 @@ Spread_Comparison_foo(Bonds10yr,
                       "10-Year Yield Spread Between South Africa and Germany")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-20-1.png" width="100%" height="100%" />
+<img src="README_files/figure-gfm/unnamed-chunk-22-1.png" width="100%" height="100%" />
 
 ``` r
 Spread_Comparison_foo(Bonds10yr, 
@@ -701,7 +716,7 @@ Spread_Comparison_foo(Bonds10yr,
                       "10-Year Yield Spread Between South Africa and China")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-21-1.png" width="100%" height="100%" />
+<img src="README_files/figure-gfm/unnamed-chunk-23-1.png" width="100%" height="100%" />
 
 ``` r
 Spread_Comparison_foo(Bonds10yr, 
@@ -712,4 +727,25 @@ Spread_Comparison_foo(Bonds10yr,
                       "10-Year Yield Spread Between South Africa and India")
 ```
 
-<img src="README_files/figure-gfm/unnamed-chunk-22-1.png" width="100%" height="100%" />
+<img src="README_files/figure-gfm/unnamed-chunk-24-1.png" width="100%" height="100%" />
+
+# Bibliography
+
+CBOE Volatility Index: VIX \[Online\]. \[n.d.\]. Available:
+<https://fred.stlouisfed.org/series/VIXCLS> \[2023, December 10\].
+
+Central Government Debt \[Online\]. \[n.d.\]. Available:
+<https://www.imf.org/external/datamapper/CG_DEBT_GDP@GDD/CHN/FRA/DEU/ITA/JPN/GBR/USA>
+\[2023, December 28\].
+
+Consumer Price Index (2010 = 100) \[Online\]. \[n.d.\]. Available:
+<https://data.worldbank.org/indicator/FP.CPI.TOTL?end=2022&start=2010&view=chart>
+\[2023, December 10\].
+
+U.S. to Euro Spot Exchange Rate \[Online\]. \[n.d.\]. Available:
+<https://fred.stlouisfed.org/series/DEXUSEU> \[2023, December 10\].
+
+World Bank Group country classifications by income level for FY24
+\[Online\]. \[n.d.\]. Available:
+<https://blogs.worldbank.org/opendata/new-world-bank-group-country-classifications-income-level-fy24>
+\[2023, December 31\].
